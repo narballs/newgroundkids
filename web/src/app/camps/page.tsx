@@ -31,7 +31,7 @@ const statusColors = {
   upcoming: "default",
   open: "success",
   filling: "warning",
-  full: "destructive",
+  full: "error",
   completed: "secondary",
 } as const;
 
@@ -64,7 +64,7 @@ function CampCard({ camp }: { camp: Camp }) {
             <Icon className="h-5 w-5 text-accent" />
             <CardTitle className="font-heading text-xl">{camp.name}</CardTitle>
           </div>
-          <Badge variant={camp.status === "full" ? "destructive" : camp.status === "filling" ? "warning" : "outline"}>
+          <Badge variant={camp.status === "full" ? "error" : camp.status === "filling" ? "warning" : "outline"}>
             {camp.status === "full" ? "Sold Out" : 
              camp.status === "filling" ? "Filling Fast" : 
              `${camp.spotsRemaining} spots`}
