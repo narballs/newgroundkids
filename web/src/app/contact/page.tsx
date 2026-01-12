@@ -128,9 +128,7 @@ export default function ContactPage() {
                               className="flex justify-between py-2 border-b last:border-0"
                             >
                               <span className="font-medium">{day.day}</span>
-                              <span className={day.hours === "Closed" ? "text-muted-foreground" : ""}>
-                                {day.hours}
-                              </span>
+                              <span>{day.hours}</span>
                             </div>
                           ))}
                         </div>
