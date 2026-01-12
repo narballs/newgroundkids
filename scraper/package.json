@@ -1,0 +1,24 @@
+{
+  "name": "ngk-brand-scraper",
+  "version": "1.0.0",
+  "description": "Scrape brand assets from New Ground websites",
+  "type": "module",
+  "scripts": {
+    "scrape": "tsx src/index.ts",
+    "scrape:apparel": "tsx src/index.ts --site=apparel",
+    "scrape:jiujitsu": "tsx src/index.ts --site=jiujitsu",
+    "scrape:content": "tsx src/scrape-content.ts",
+    "scrape:all": "tsx src/index.ts && tsx src/scrape-content.ts"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "node-vibrant": "^3.2.1-alpha.1",
+    "playwright": "^1.40.0",
+    "sharp": "^0.33.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}

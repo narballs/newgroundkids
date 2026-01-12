@@ -1,0 +1,125 @@
+{
+  "name": "New Ground Jiu Jitsu",
+  "url": "https://www.newgroundjiujitsu.com/",
+  "scrapedAt": "2026-01-11T21:21:43.415Z",
+  "logo": {
+    "primary": "assets\\logos\\logo-primary.png",
+    "favicon": "assets\\logos\\favicon.png",
+    "appleTouchIcon": null,
+    "all": [
+      {
+        "path": "assets\\logos\\logo-primary.png",
+        "type": "primary"
+      },
+      {
+        "path": "assets\\logos\\favicon.png",
+        "type": "favicon"
+      }
+    ]
+  },
+  "colors": {
+    "primary": "#ffffff",
+    "secondary": "#000000",
+    "accent": "#253551",
+    "background": "#ffffff",
+    "text": "#ffffff",
+    "textLight": "#000000",
+    "cssVariables": {},
+    "elementColors": {
+      "buttons": [
+        "#ffffff",
+        "#000000",
+        "#253551"
+      ],
+      "links": [
+        "#ffffff",
+        "#000000"
+      ],
+      "navigation": [
+        "#000000"
+      ],
+      "headings": [
+        "#ffffff",
+        "#000000"
+      ],
+      "backgrounds": [
+        "#ffffff"
+      ]
+    },
+    "fromLogo": {
+      "vibrant": "#7f7f7f",
+      "muted": "#4c4c4c",
+      "darkVibrant": "#424242",
+      "darkMuted": "#040404",
+      "lightVibrant": "#bcbcbc",
+      "lightMuted": "#4c4c4c"
+    }
+  },
+  "typography": {
+    "headings": {
+      "fontFamily": "adelle-sans",
+      "fontSize": "80.512px",
+      "fontWeight": "700",
+      "lineHeight": "87.0818px",
+      "letterSpacing": "normal"
+    },
+    "body": {
+      "fontFamily": "bebas-neue",
+      "fontSize": "63.616px",
+      "fontWeight": "400",
+      "lineHeight": "101.786px",
+      "letterSpacing": "6.3616px"
+    },
+    "navigation": {
+      "fontFamily": "bebas-neue",
+      "fontSize": "14.464px",
+      "fontWeight": "400",
+      "lineHeight": "23.1424px",
+      "letterSpacing": "2.8928px"
+    },
+    "buttons": {
+      "fontFamily": "bebas-neue",
+      "fontSize": "14.464px",
+      "fontWeight": "400",
+      "lineHeight": "23.1424px",
+      "letterSpacing": "2.8928px"
+    },
+    "allFonts": [
+      "sans-serif",
+      "europa",
+      "freight-sans-pro",
+      "bebas-neue",
+      "Clarkson, Arial, sans-serif",
+      "adelle-sans"
+    ],
+    "googleFonts": [
+      "europa",
+      "freight-sans-pro",
+      "bebas-neue",
+      "Clarkson",
+      "adelle-sans"
+    ]
+  },
+  "images": [
+    {
+      "name": "general-1.png",
+      "path": "assets\\images\\general-1.png",
+      "type": "general"
+    },
+    {
+      "name": "general-2.jpg",
+      "path": "assets\\images\\general-2.jpg",
+      "type": "general"
+    },
+    {
+      "name": "general-3.jpg",
+      "path": "assets\\images\\general-3.jpg",
+      "type": "general"
+    },
+    {
+      "name": "general-4.jpg",
+      "path": "assets\\images\\general-4.jpg",
+      "type": "general"
+    }
+  ]
+}
