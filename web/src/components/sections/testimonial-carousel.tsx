@@ -43,7 +43,7 @@ export function TestimonialCarousel({
   };
 
   if (variant === "minimal") {
-    const current = testimonials[activeIndex];
+    const current = testimonials[activeIndex]!;
     return (
       <div className={cn("text-center", className)}>
         <Quote className="h-10 w-10 text-accent mx-auto mb-6 opacity-50" />
@@ -85,7 +85,7 @@ export function TestimonialCarousel({
   }
 
   // Single testimonial view with arrows
-  const current = testimonials[activeIndex];
+  const current = testimonials[activeIndex]!;
 
   return (
     <div className={cn("relative", className)}>

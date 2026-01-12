@@ -4,10 +4,15 @@ import { leadCaptureSchema, type ActionResponse } from "@/lib/validations";
 import { checkRateLimit, rateLimitConfigs } from "@/lib/rate-limit";
 import { headers } from "next/headers";
 
+interface LeadResponseData {
+  name?: string;
+  recommendedProgram?: string;
+}
+
 export async function submitLeadCapture(
-  _prevState: ActionResponse | null,
+  _prevState: ActionResponse<LeadResponseData> | null,
   formData: FormData
-): Promise<ActionResponse> {
+): Promise<ActionResponse<LeadResponseData>> {
   // Get client IP for rate limiting
   const headersList = await headers();
   const ip = headersList.get("x-forwarded-for") || headersList.get("x-real-ip") || "unknown";

@@ -848,15 +848,15 @@ export default function DesignSystemPage() {
 
           <Grid cols={1} colsMd={3} gap="md" className="mt-8">
             <TestimonialCard
-              testimonial={testimonials[0]}
+              testimonial={testimonials[0]!}
               variant="default"
             />
             <TestimonialCard
-              testimonial={testimonials[1]}
+              testimonial={testimonials[1]!}
               variant="compact"
             />
             <TestimonialCard
-              testimonial={testimonials[2]}
+              testimonial={testimonials[2]!}
               variant="featured"
             />
           </Grid>

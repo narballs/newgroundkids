@@ -4,7 +4,7 @@ type ContainerSize = "xs" | "sm" | "tight" | "wide" | "full";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: ContainerSize;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 const sizeClasses: Record<ContainerSize, string> = {
@@ -23,7 +23,6 @@ export function Container({
   ...props
 }: ContainerProps) {
   return (
-    // @ts-expect-error - Dynamic component type
     <Component className={cn(sizeClasses[size], className)} {...props}>
       {children}
     </Component>

@@ -8,7 +8,7 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   colsMd?: GridCols;
   colsLg?: GridCols;
   gap?: GridGap;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 const colsClasses: Record<GridCols, string> = {
@@ -60,7 +60,6 @@ export function Grid({
   ...props
 }: GridProps) {
   return (
-    // @ts-expect-error - Dynamic component type
     <Component
       className={cn(
         "grid",

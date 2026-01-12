@@ -11,6 +11,11 @@ import { cn } from "@/lib/utils";
 import { submitLeadCapture } from "@/app/actions";
 import type { ActionResponse } from "@/lib/validations";
 
+interface LeadResponseData {
+  name?: string;
+  recommendedProgram?: string;
+}
+
 interface LeadCaptureFormProps {
   title?: string;
   description?: string;
@@ -22,7 +27,7 @@ interface LeadCaptureFormProps {
   className?: string;
 }
 
-const initialState: ActionResponse | null = null;
+const initialState: ActionResponse<LeadResponseData> | null = null;
 
 export function LeadCaptureForm({
   title = "Get Your Free Trial",

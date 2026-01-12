@@ -102,8 +102,7 @@ export default function PrivateEventsPage() {
       <main className="flex-1">
         <PageHero
           title="Private Events & Rentals"
-          description="Rent our space for team parties, scout troops, corporate events, and more. Custom packages available."
-          badge="Exclusive Rentals"
+          subtitle="Rent our space for team parties, scout troops, corporate events, and more. Custom packages available."
           backgroundImage="/images/about-bg.jpg"
         />
 
@@ -261,7 +260,7 @@ export default function PrivateEventsPage() {
 
         {/* Inquiry Form */}
         <Section className="bg-background">
-          <Container size="md">
+          <Container size="sm">
             <div className="text-center mb-12">
               <Badge variant="outline" className="mb-4">Get in Touch</Badge>
               <h2 className="mb-4">Request a Quote</h2>

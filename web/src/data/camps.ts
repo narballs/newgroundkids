@@ -185,7 +185,7 @@ export const camps: Camp[] = [
 
 // Helper functions
 export function getUpcomingCamps(): Camp[] {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0]!;
   return camps
     .filter((c) => c.startDate >= today && c.status !== "completed")
     .sort((a, b) => a.startDate.localeCompare(b.startDate));

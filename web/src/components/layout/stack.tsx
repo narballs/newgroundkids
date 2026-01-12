@@ -11,7 +11,7 @@ interface StackProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: StackAlign;
   justify?: StackJustify;
   wrap?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 const directionClasses: Record<StackDirection, string> = {
@@ -58,7 +58,6 @@ export function Stack({
   ...props
 }: StackProps) {
   return (
-    // @ts-expect-error - Dynamic component type
     <Component
       className={cn(
         "flex",
