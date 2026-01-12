@@ -831,7 +831,7 @@ export default function DesignSystemPage() {
 
           <Grid cols={1} colsMd={3} gap="lg" className="mt-8">
             {partyPackages.map((pkg) => (
-              <PackageCard key={pkg.id} partyPackage={pkg} />
+              <PackageCard key={pkg.id} package={pkg} />
             ))}
           </Grid>
         </Container>
