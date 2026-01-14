@@ -227,7 +227,7 @@ brand-assets/
 | **Location** | Sherman Oaks, CA |
 | **Address** | 4617 Van Nuys Blvd, Unit B, Sherman Oaks, CA 91403 |
 | **Phone** | (818) 538-4989 |
-| **Email** | info@newgroundkids.com |
+| **Email** | newgroundjj@gmail.com |
 | **Website** | https://newgroundkids.com |
 
 ### Brand Taglines & Headlines
