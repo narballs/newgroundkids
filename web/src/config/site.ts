@@ -11,12 +11,12 @@ export const siteConfig = {
     "Unforgettable birthday parties and camps for kids in Sherman Oaks, CA. Action-packed packages, professional staff, stress-free planning.",
   url: "https://newgroundkids.com",
   ogImage: "https://newgroundkids.com/og-image.jpg",
-  
+
   // Contact - Using New Ground facility location
   contact: {
     phone: "(818) 538-4989",
     phoneRaw: "+18185384989",
-    email: "info@newgroundkids.com",
+    email: "newgroundjj@gmail.com",
     address: "4617 Van Nuys Blvd, Unit B",
     city: "Sherman Oaks",
     state: "CA",
@@ -24,7 +24,7 @@ export const siteConfig = {
     fullAddress: "4617 Van Nuys Blvd, Unit B, Sherman Oaks, CA 91403",
     addressLink: "https://maps.google.com/?q=4617+Van+Nuys+Blvd,+Unit+B,+Sherman+Oaks,+CA+91403",
   },
-  
+
   // Business Hours (Events-focused)
   hours: {
     parties: "Sat-Sun 10:00 AM - 6:00 PM",
@@ -40,7 +40,7 @@ export const siteConfig = {
       { day: "Sunday", hours: "Parties: 10am-6pm" },
     ],
   },
-  
+
   // Social Links
   social: {
     facebook: "https://facebook.com/newgroundkids",
@@ -49,7 +49,7 @@ export const siteConfig = {
     yelp: "https://yelp.com/biz/newground-kids-sherman-oaks",
     tiktok: "https://tiktok.com/@newgroundkids",
   },
-  
+
   // Parent Brands
   parentBrands: {
     jiujitsu: {
@@ -62,7 +62,7 @@ export const siteConfig = {
       url: "https://newgroundapparel.com",
     },
   },
-  
+
   // Booking (Events-focused)
   booking: {
     partiesUrl: "/birthday-parties",
@@ -71,7 +71,7 @@ export const siteConfig = {
     calendarUrl: "https://cal.com/newgroundkids", // Cal.com for booking
     inquiryUrl: "/contact",
   },
-  
+
   // Main Navigation (Events-only)
   mainNav: [
     { title: "Birthday Parties", href: "/birthday-parties" },
@@ -80,7 +80,7 @@ export const siteConfig = {
     { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" },
   ],
-  
+
   // Footer Navigation (Events-only)
   footerNav: {
     events: [
@@ -99,12 +99,13 @@ export const siteConfig = {
       { title: "Terms of Service", href: "/terms-of-service" },
     ],
   },
-  
+
   // SEO defaults (Events-focused)
   seo: {
     titleTemplate: "%s | NewGround Kids",
     defaultTitle: "NewGround Kids | Epic Parties & Camps for Kids",
-    defaultDescription: "Unforgettable birthday parties and camps for kids in Sherman Oaks! Action-packed packages from $299. Safe, fun, stress-free. Book your event today!",
+    defaultDescription:
+      "Unforgettable birthday parties and camps for kids in Sherman Oaks! Action-packed packages from $299. Safe, fun, stress-free. Book your event today!",
     keywords: [
       "kids birthday party venue",
       "birthday party sherman oaks",
@@ -118,7 +119,7 @@ export const siteConfig = {
       "kids event venue",
     ],
   },
-  
+
   // Feature flags
   features: {
     onlineBooking: true,
@@ -128,7 +129,7 @@ export const siteConfig = {
     privateEvents: true,
     newsletter: true,
   },
-  
+
   // Party Packages (for quick reference)
   packages: {
     bronze: {
@@ -153,7 +154,7 @@ export const siteConfig = {
       deposit: 300,
     },
   },
-  
+
   // Camp Pricing (for quick reference)
   campPricing: {
     daily: 79,

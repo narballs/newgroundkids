@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { submitContactForm } from "@/app/actions";
 import type { ActionResponse } from "@/lib/validations";
 
@@ -56,26 +55,28 @@ export function ContactForm({
   const formContent = (
     <>
       {state?.success ? (
-        <div className="text-center py-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-4">
+        <div className="py-8 text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600">
             <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
+          <h3 className="mb-2 text-xl font-semibold">Message Sent!</h3>
           <p className="text-muted-foreground mb-4">
             Thank you for reaching out. We&apos;ll get back to you shortly.
           </p>
-          <Button 
-            variant="outline" 
-            onClick={() => window.location.reload()}
-          >
+          <Button variant="outline" onClick={() => window.location.reload()}>
             Send Another Message
           </Button>
         </div>
       ) : (
         <form ref={formRef} action={formAction} className="space-y-4">
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <FormField
               label="Name"
               name="name"
@@ -93,7 +94,7 @@ export function ContactForm({
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <FormField
               label="Phone"
               name="phone"
@@ -128,18 +129,18 @@ export function ContactForm({
           />
 
           {state?.message && !state.success && state.errors && (
-            <p className="text-sm text-destructive">{state.message}</p>
+            <p className="text-destructive text-sm">{state.message}</p>
           )}
 
           <Button type="submit" size="lg" disabled={isPending} className="w-full sm:w-auto">
             {isPending ? (
               <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Sending...
               </>
             ) : (
               <>
-                <Send className="h-4 w-4 mr-2" />
+                <Send className="mr-2 h-4 w-4" />
                 Send Message
               </>
             )}
@@ -165,7 +166,7 @@ export function ContactForm({
     <div className={className}>
       {(title || description) && (
         <div className="mb-6">
-          {title && <h3 className="text-2xl font-semibold mb-2">{title}</h3>}
+          {title && <h3 className="mb-2 text-2xl font-semibold">{title}</h3>}
           {description && <p className="text-muted-foreground">{description}</p>}
         </div>
       )}

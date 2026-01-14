@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, HelpCircle, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -21,39 +22,55 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
-  description: "Find answers to common questions about NewGround Kids birthday parties, camps, private events, booking, and policies.",
+  description:
+    "Find answers to common questions about NewGround Kids birthday parties, camps, private events, booking, and policies.",
 };
 
 export default function FAQPage() {
   return (
     <>
       <Header />
-      
+
       <main className="flex-1">
-        {/* Hero Section */}
-        <Section className="bg-primary text-primary-foreground py-16 lg:py-20">
-          <Container>
+        {/* Hero Section with Background Image */}
+        <section className="relative overflow-hidden py-20 lg:py-24">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/birthday/DSC00728.jpg"
+              alt="NewGround Kids activities"
+              fill
+              className="object-cover brightness-[0.25]"
+              priority
+            />
+            <div className="from-primary/80 to-primary/60 absolute inset-0 bg-gradient-to-br" />
+          </div>
+
+          <Container className="relative z-10">
             <div className="max-w-3xl">
-              <Badge variant="accent" className="mb-4 shadow-hard-sm">
+              {/* Badge */}
+              <Badge variant="accent" className="animate-slide-down mb-6 shadow-lg">
                 <HelpCircle className="mr-2 h-4 w-4" />
                 Help Center
               </Badge>
-              <h1 className="text-primary-foreground mb-6">
-                Frequently Asked Questions
-              </h1>
-              <p className="text-xl text-primary-foreground/80">
-                Find answers to the most common questions about our birthday parties, 
-                camps, and private events. Can&apos;t find what you&apos;re looking for? 
-                Just ask!
-              </p>
+
+              {/* Text with backdrop for readability */}
+              <div className="relative inline-block">
+                <div className="absolute -inset-4 -z-10 rounded-2xl bg-black/40 backdrop-blur-sm md:-inset-6" />
+                <h1 className="animate-slide-up mb-4 text-white">Frequently Asked Questions</h1>
+                <p className="animate-slide-up animation-delay-100 text-lg text-white/90 md:text-xl">
+                  Find answers to the most common questions about our birthday parties, camps, and
+                  private events. Can&apos;t find what you&apos;re looking for? Just ask!
+                </p>
+              </div>
             </div>
           </Container>
-        </Section>
+        </section>
 
         {/* Quick Navigation */}
         <Section className="bg-muted py-8">
           <Container>
-            <div className="flex flex-wrap gap-3 justify-center">
+            <div className="flex flex-wrap justify-center gap-3">
               {faqCategories.map((category) => (
                 <Button
                   key={category.id}
@@ -72,22 +89,30 @@ export default function FAQPage() {
         {/* FAQ Sections */}
         <Section className="bg-background">
           <Container>
-            <div className="max-w-3xl mx-auto space-y-12">
+            <div className="mx-auto max-w-3xl space-y-12">
               {faqCategories.map((category) => {
-                const categoryFaqs = getFAQsByCategory(category.id as "general" | "parties" | "camps" | "rentals" | "booking" | "policies");
+                const categoryFaqs = getFAQsByCategory(
+                  category.id as
+                    | "general"
+                    | "parties"
+                    | "camps"
+                    | "rentals"
+                    | "booking"
+                    | "policies"
+                );
                 if (categoryFaqs.length === 0) return null;
 
                 return (
                   <div key={category.id} id={category.id} className="scroll-mt-24">
-                    <h2 className="mb-6 pb-4 border-b-2">{category.label}</h2>
+                    <h2 className="mb-6 border-b-2 pb-4">{category.label}</h2>
                     <Accordion type="single" collapsible className="space-y-4">
                       {categoryFaqs.map((faq) => (
-                        <AccordionItem 
-                          key={faq.id} 
+                        <AccordionItem
+                          key={faq.id}
                           value={faq.id}
-                          className="border-2 rounded-lg shadow-hard-sm px-6 data-[state=open]:shadow-hard"
+                          className="shadow-hard-sm data-[state=open]:shadow-hard rounded-lg border-2 px-6"
                         >
-                          <AccordionTrigger className="text-left font-heading hover:no-underline py-4">
+                          <AccordionTrigger className="font-heading py-4 text-left hover:no-underline">
                             {faq.question}
                           </AccordionTrigger>
                           <AccordionContent className="text-muted-foreground pb-4">
@@ -106,30 +131,20 @@ export default function FAQPage() {
         {/* Still Have Questions */}
         <Section className="bg-muted">
           <Container>
-            <div className="max-w-2xl mx-auto text-center">
+            <div className="mx-auto max-w-2xl text-center">
               <h2 className="mb-4">Still Have Questions?</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                We&apos;re here to help! Reach out and we&apos;ll get back to you 
-                within 24 hours.
+              <p className="text-muted-foreground mb-8 text-lg">
+                We&apos;re here to help! Reach out and we&apos;ll get back to you within 24 hours.
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
-                  className="font-heading shadow-hard"
-                  asChild
-                >
+
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                <Button size="lg" className="font-heading shadow-hard" asChild>
                   <a href={`tel:${siteConfig.contact.phoneRaw}`}>
                     <Phone className="mr-2 h-5 w-5" />
                     Call Us
                   </a>
                 </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="font-heading"
-                  asChild
-                >
+                <Button size="lg" variant="outline" className="font-heading" asChild>
                   <Link href="/contact">
                     Send a Message
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -143,21 +158,14 @@ export default function FAQPage() {
         {/* CTA */}
         <Section className="bg-primary text-primary-foreground">
           <Container>
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-primary-foreground mb-6">
-                Ready to Book Your Event?
-              </h2>
-              <p className="text-xl text-primary-foreground/80 mb-8">
-                Birthday parties, camps, private events—we&apos;ve got you covered. 
-                Let&apos;s make it unforgettable!
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-primary-foreground mb-6">Ready to Book Your Event?</h2>
+              <p className="text-primary-foreground/80 mb-8 text-xl">
+                Birthday parties, camps, private events—we&apos;ve got you covered. Let&apos;s make
+                it unforgettable!
               </p>
-              
-              <Button 
-                size="lg" 
-                variant="accent" 
-                className="shadow-hard font-heading"
-                asChild
-              >
+
+              <Button size="lg" variant="accent" className="shadow-hard font-heading" asChild>
                 <Link href="/birthday-parties">
                   Plan a Party
                   <ArrowRight className="ml-2 h-5 w-5" />

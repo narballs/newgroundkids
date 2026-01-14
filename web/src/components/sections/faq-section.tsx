@@ -7,7 +7,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SectionHeader } from "./section-header";
-import { cn } from "@/lib/utils";
 
 interface FAQItem {
   question: string;
@@ -24,6 +23,25 @@ interface FAQSectionProps {
   className?: string;
 }
 
+function FAQList({ items, startIndex = 0 }: { items: FAQItem[]; startIndex?: number }) {
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      {items.map((faq, index) => (
+        <AccordionItem
+          key={startIndex + index}
+          value={`item-${startIndex + index}`}
+          className="border-border border-b"
+        >
+          <AccordionTrigger className="hover:text-primary py-4 text-left font-semibold">
+            {faq.question}
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground pb-4">{faq.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
+
 export function FAQSection({
   title = "Frequently Asked Questions",
   subtitle,
@@ -37,36 +55,17 @@ export function FAQSection({
   const leftFaqs = faqs.slice(0, midpoint);
   const rightFaqs = faqs.slice(midpoint);
 
-  const FAQList = ({ items, startIndex = 0 }: { items: FAQItem[]; startIndex?: number }) => (
-    <Accordion type="single" collapsible className="w-full">
-      {items.map((faq, index) => (
-        <AccordionItem
-          key={startIndex + index}
-          value={`item-${startIndex + index}`}
-          className="border-b border-border"
-        >
-          <AccordionTrigger className="text-left font-semibold hover:text-primary py-4">
-            {faq.question}
-          </AccordionTrigger>
-          <AccordionContent className="text-muted-foreground pb-4">
-            {faq.answer}
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-
   return (
     <div className={className}>
       <SectionHeader badge={badge} title={title} subtitle={subtitle} />
 
       {columns === 2 ? (
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-0">
+        <div className="grid gap-x-12 gap-y-0 md:grid-cols-2">
           <FAQList items={leftFaqs} startIndex={0} />
           <FAQList items={rightFaqs} startIndex={midpoint} />
         </div>
       ) : (
-        <div className="max-w-3xl mx-auto">
+        <div className="mx-auto max-w-3xl">
           <FAQList items={faqs} />
         </div>
       )}

@@ -7,3 +7,4 @@ export { FAQSection } from "./faq-section";
 export { StatsBar } from "./stats-bar";
 export { CTABanner } from "./cta-banner";
 export { TestimonialCarousel } from "./testimonial-carousel";
+export { ComingSoonPage } from "./coming-soon";

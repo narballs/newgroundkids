@@ -17,13 +17,12 @@ export async function submitLeadCapture(
   const headersList = await headers();
   const ip = headersList.get("x-forwarded-for") || headersList.get("x-real-ip") || "unknown";
   const email = formData.get("email") as string;
-  
+
   // Check rate limit by IP and email
   const ipRateLimit = checkRateLimit(`lead:${ip}`, rateLimitConfigs.lead);
   const emailRateLimit = checkRateLimit(`lead:${email}`, rateLimitConfigs.lead);
-  
+
   if (!ipRateLimit.allowed || !emailRateLimit.allowed) {
-    const resetIn = Math.max(ipRateLimit.resetIn, emailRateLimit.resetIn);
     return {
       success: false,
       message: `You've already submitted a request. Please try again later or call us to schedule your trial.`,
@@ -34,16 +33,16 @@ export async function submitLeadCapture(
   const rawData = {
     name: formData.get("name") as string,
     email: email,
-    phone: formData.get("phone") as string || undefined,
-    childAge: formData.get("childAge") as string || undefined,
-    childName: formData.get("childName") as string || undefined,
-    program: formData.get("program") as string || undefined,
-    source: formData.get("source") as string || "website",
+    phone: (formData.get("phone") as string) || undefined,
+    childAge: (formData.get("childAge") as string) || undefined,
+    childName: (formData.get("childName") as string) || undefined,
+    program: (formData.get("program") as string) || undefined,
+    source: (formData.get("source") as string) || "website",
   };
 
   // Validate
   const validationResult = leadCaptureSchema.safeParse(rawData);
-  
+
   if (!validationResult.success) {
     const errors: Record<string, string[]> = {};
     validationResult.error.issues.forEach((issue) => {
@@ -53,7 +52,7 @@ export async function submitLeadCapture(
       }
       errors[path].push(issue.message);
     });
-    
+
     return {
       success: false,
       message: "Please fix the errors below.",
@@ -69,7 +68,7 @@ export async function submitLeadCapture(
     // 2. Send to CRM (HubSpot, Mailchimp, etc.)
     // 3. Send confirmation email to parent
     // 4. Notify staff
-    
+
     console.log("🎯 New Lead Captured:", {
       ...data,
       timestamp: new Date().toISOString(),
@@ -105,7 +104,7 @@ export async function submitLeadCapture(
     return {
       success: true,
       message: `You're all set! We'll contact you within 24 hours to schedule your free ${recommendedProgram} class.`,
-      data: { 
+      data: {
         name: data.name.split(" ")[0], // First name
         recommendedProgram,
       },

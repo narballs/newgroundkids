@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 type LogoVariant = "default" | "white" | "dark";
 type LogoSize = "sm" | "md" | "lg" | "xl";
@@ -13,7 +12,10 @@ interface LogoProps {
   showText?: boolean;
 }
 
-const sizeClasses: Record<LogoSize, { width: number; height: number; style: { height: number; width: string } }> = {
+const sizeClasses: Record<
+  LogoSize,
+  { width: number; height: number; style: { height: number; width: string } }
+> = {
   sm: { width: 100, height: 28, style: { height: 28, width: "auto" } },
   md: { width: 140, height: 40, style: { height: 40, width: "auto" } },
   lg: { width: 180, height: 52, style: { height: 52, width: "auto" } },
@@ -53,9 +55,7 @@ export function Logo({
       <Link href={href} className="inline-flex items-center gap-2">
         {LogoImage}
         {showText && (
-          <span className="font-heading text-xl tracking-wide uppercase">
-            NewGround Kids
-          </span>
+          <span className="font-heading text-xl tracking-wide uppercase">NewGround Kids</span>
         )}
       </Link>
     );
@@ -65,9 +65,7 @@ export function Logo({
     <div className="inline-flex items-center gap-2">
       {LogoImage}
       {showText && (
-        <span className="font-heading text-xl tracking-wide uppercase">
-          NewGround Kids
-        </span>
+        <span className="font-heading text-xl tracking-wide uppercase">NewGround Kids</span>
       )}
     </div>
   );

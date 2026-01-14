@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Section } from "@/components/layout/section";
@@ -16,7 +16,8 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with NewGround Kids. Book birthday parties, camps, or ask about private events. Located in Sherman Oaks, CA.",
+  description:
+    "Get in touch with NewGround Kids. Book birthday parties, camps, or ask about private events. Located in Sherman Oaks, CA.",
 };
 
 const contactMethods = [
@@ -50,42 +51,63 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      
+
       <main className="flex-1">
-        {/* Hero Section */}
-        <Section className="bg-primary text-primary-foreground py-16 lg:py-20">
-          <Container>
+        {/* Hero Section with Background Image */}
+        <section className="relative overflow-hidden py-20 lg:py-28">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/birthday/DSC00771.jpg"
+              alt="NewGround Kids facility"
+              fill
+              className="object-cover brightness-[0.3]"
+              priority
+            />
+            <div className="from-primary/90 to-primary/70 absolute inset-0 bg-gradient-to-r" />
+          </div>
+
+          <Container className="relative z-10">
             <div className="max-w-3xl">
-              <Badge variant="accent" className="mb-4 shadow-hard-sm">
+              {/* Badge */}
+              <Badge variant="accent" className="animate-slide-down mb-6 shadow-lg">
                 <MessageSquare className="mr-2 h-4 w-4" />
                 Get In Touch
               </Badge>
-              <h1 className="text-primary-foreground mb-6">Contact Us</h1>
-              <p className="text-xl text-primary-foreground/80">
-                Have questions about our programs? Want to schedule a tour? 
-                We&apos;d love to hear from you!
-              </p>
+
+              {/* Text with backdrop for readability */}
+              <div className="relative inline-block">
+                <div className="absolute -inset-4 -z-10 rounded-2xl bg-black/40 backdrop-blur-sm md:-inset-6" />
+                <h1 className="animate-slide-up mb-4 text-white">Contact Us</h1>
+                <p className="animate-slide-up animation-delay-100 text-lg text-white/90 md:text-xl">
+                  Have questions about our programs? Want to schedule a tour? We&apos;d love to hear
+                  from you!
+                </p>
+              </div>
             </div>
           </Container>
-        </Section>
+        </section>
 
         {/* Contact Methods */}
         <Section className="bg-muted py-10">
           <Container>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid gap-6 md:grid-cols-3">
               {contactMethods.map((method) => (
-                <Card key={method.title} className="border-2 shadow-hard">
+                <Card key={method.title} className="shadow-hard border-2">
                   <CardContent className="pt-6">
                     <div className="flex items-start gap-4">
-                      <div className="shrink-0 w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center border-2 border-border">
-                        <method.icon className="h-6 w-6 text-accent" />
+                      <div className="bg-accent/10 border-border flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border-2">
+                        <method.icon className="text-accent h-6 w-6" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-heading text-lg mb-1">{method.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">{method.description}</p>
-                        <p className="font-medium text-sm mb-3">{method.value}</p>
+                        <h3 className="font-heading mb-1 text-lg">{method.title}</h3>
+                        <p className="text-muted-foreground mb-2 text-sm">{method.description}</p>
+                        <p className="mb-3 text-sm font-medium">{method.value}</p>
                         <Button variant="outline" size="sm" className="font-heading" asChild>
-                          <a href={method.href} target={method.title === "Visit" ? "_blank" : undefined}>
+                          <a
+                            href={method.href}
+                            target={method.title === "Visit" ? "_blank" : undefined}
+                          >
                             {method.action}
                           </a>
                         </Button>
@@ -101,11 +123,11 @@ export default function ContactPage() {
         {/* Contact Form & Info */}
         <Section className="bg-background">
           <Container>
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className="grid gap-12 lg:grid-cols-2">
               {/* Form */}
               <div>
                 <h2 className="mb-6">Send Us a Message</h2>
-                <Card className="border-2 shadow-hard">
+                <Card className="shadow-hard border-2">
                   <CardContent className="pt-6">
                     <ContactForm />
                   </CardContent>
@@ -115,17 +137,17 @@ export default function ContactPage() {
               {/* Info */}
               <div>
                 <h2 className="mb-6">Business Hours</h2>
-                <Card className="border-2 shadow-hard mb-6">
+                <Card className="shadow-hard mb-6 border-2">
                   <CardContent className="pt-6">
-                    <div className="flex items-start gap-4 mb-6">
-                      <Clock className="h-6 w-6 text-accent shrink-0" />
+                    <div className="mb-6 flex items-start gap-4">
+                      <Clock className="text-accent h-6 w-6 shrink-0" />
                       <div className="flex-1">
-                        <h4 className="font-heading text-lg mb-3">When We&apos;re Open</h4>
+                        <h4 className="font-heading mb-3 text-lg">When We&apos;re Open</h4>
                         <div className="space-y-2">
                           {siteConfig.hours.detailed.map((day) => (
-                            <div 
+                            <div
                               key={day.day}
-                              className="flex justify-between py-2 border-b last:border-0"
+                              className="flex justify-between border-b py-2 last:border-0"
                             >
                               <span className="font-medium">{day.day}</span>
                               <span>{day.hours}</span>
@@ -137,12 +159,12 @@ export default function ContactPage() {
                   </CardContent>
                 </Card>
 
-                <Card className="border-2 shadow-hard bg-accent/10">
+                <Card className="shadow-hard bg-accent/10 border-2">
                   <CardContent className="pt-6">
-                    <h4 className="font-heading text-lg mb-3">Quick Response Guarantee</h4>
+                    <h4 className="font-heading mb-3 text-lg">Quick Response Guarantee</h4>
                     <p className="text-muted-foreground mb-4">
-                      We respond to all inquiries within 24 hours during business days. 
-                      For urgent matters, please call us directly.
+                      We respond to all inquiries within 24 hours during business days. For urgent
+                      matters, please call us directly.
                     </p>
                     <Button className="font-heading" asChild>
                       <a href={`tel:${siteConfig.contact.phoneRaw}`}>
@@ -160,14 +182,14 @@ export default function ContactPage() {
         {/* Map */}
         <Section className="bg-muted">
           <Container>
-            <div className="text-center mb-8">
+            <div className="mb-8 text-center">
               <h2 className="mb-4">Find Us</h2>
               <p className="text-muted-foreground">
                 Located in Sherman Oaks, easily accessible from Studio City, Encino, and Van Nuys
               </p>
             </div>
-            
-            <div className="aspect-[21/9] rounded-lg overflow-hidden border-2 border-border shadow-hard-lg">
+
+            <div className="border-border shadow-hard-lg aspect-[21/9] overflow-hidden rounded-lg border-2">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.4!2d-118.45!3d34.15!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDA5JzAwLjAiTiAxMTjCsDI3JzAwLjAiVw!5e0!3m2!1sen!2sus!4v1234567890"
                 width="100%"

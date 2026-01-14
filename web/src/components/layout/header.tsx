@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Menu, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import {
   NavigationMenu,
@@ -19,10 +19,10 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+    <header className="border-border bg-background/95 supports-[backdrop-filter]:bg-background/85 sticky top-0 z-50 w-full border-b-2 backdrop-blur">
       <div className="container-wide flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="group flex items-center gap-2">
           <Image
             src="/logo.png"
             alt={siteConfig.name}
@@ -43,7 +43,7 @@ export function Header() {
                 <NavigationMenuLink asChild>
                   <Link
                     href={item.href}
-                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-heading uppercase tracking-wide transition-colors hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    className="group bg-background font-heading hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm tracking-wide uppercase transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                   >
                     {item.title}
                   </Link>
@@ -54,10 +54,10 @@ export function Header() {
         </NavigationMenu>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden items-center gap-4 lg:flex">
           <a
             href={`tel:${siteConfig.contact.phoneRaw}`}
-            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors"
           >
             <Phone className="h-4 w-4" />
             {siteConfig.contact.phone}
@@ -75,32 +75,36 @@ export function Header() {
               <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l-2" aria-describedby={undefined}>
+          <SheetContent
+            side="right"
+            className="w-[300px] border-l-2 sm:w-[400px]"
+            aria-describedby={undefined}
+          >
             <VisuallyHidden.Root>
               <SheetTitle>Navigation Menu</SheetTitle>
             </VisuallyHidden.Root>
-            <nav className="flex flex-col gap-4 mt-8">
+            <nav className="mt-8 flex flex-col gap-4">
               {/* All nav items */}
               {siteConfig.mainNav.map((item) => (
                 <Link
                   key={item.title}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-lg font-heading uppercase tracking-wide hover:text-accent transition-colors"
+                  className="font-heading hover:text-accent text-lg tracking-wide uppercase transition-colors"
                 >
                   {item.title}
                 </Link>
               ))}
-              
-              <div className="pt-4 mt-4 border-t-2 space-y-4">
+
+              <div className="mt-4 space-y-4 border-t-2 pt-4">
                 <a
                   href={`tel:${siteConfig.contact.phoneRaw}`}
-                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
                 >
                   <Phone className="h-5 w-5" />
                   {siteConfig.contact.phone}
                 </a>
-                <Button asChild variant="accent" className="w-full shadow-hard font-heading">
+                <Button asChild variant="accent" className="shadow-hard font-heading w-full">
                   <Link href="/birthday-parties" onClick={() => setIsOpen(false)}>
                     Book Now
                   </Link>

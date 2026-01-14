@@ -2,68 +2,59 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const cardVariants = cva(
-  "bg-card text-card-foreground rounded transition-all",
-  {
-    variants: {
-      variant: {
-        // Default - Hard border with shadow (Street style)
-        default:
-          "border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)]",
+const cardVariants = cva("bg-card text-card-foreground rounded-xl transition-all", {
+  variants: {
+    variant: {
+      // Default - Clean with soft shadow
+      default: "border border-border shadow-[var(--shadow-soft-md)]",
 
-        // Elevated - Larger hard shadow
-        elevated:
-          "border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard-lg)]",
+      // Elevated - Larger soft shadow
+      elevated: "border border-border shadow-[var(--shadow-soft-lg)]",
 
-        // Interactive - Card with hover pop effect
-        interactive:
-          "border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)] hover:shadow-[var(--shadow-hard-xl)] hover:translate-x-[-4px] hover:translate-y-[-4px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-[-1px] active:translate-y-[-1px] cursor-pointer duration-100",
+      // Interactive - Card with hover lift effect
+      interactive:
+        "border border-border shadow-[var(--shadow-soft-md)] hover:shadow-[var(--shadow-soft-xl)] hover:translate-y-[-4px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-[-2px] cursor-pointer duration-200",
 
-        // Featured - Card with accent top border
-        featured:
-          "border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard-lg)] relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-accent",
+      // Featured - Card with accent top border
+      featured:
+        "border border-border shadow-[var(--shadow-soft-lg)] relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-accent",
 
-        // Accent Shadow - Hard shadow with accent color
-        "accent-shadow":
-          "border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard-accent)]",
+      // Accent Shadow - Soft shadow with accent tint
+      "accent-shadow": "border border-accent/20 shadow-[var(--shadow-hard-accent)]",
 
-        // Ghost - Minimal, no border (for grouping)
-        ghost: "bg-transparent border-0 shadow-none",
+      // Ghost - Minimal, no border (for grouping)
+      ghost: "bg-transparent border-0 shadow-none",
 
-        // Muted - Subtle background
-        muted: "bg-muted border-2 border-transparent shadow-none",
+      // Muted - Subtle background
+      muted: "bg-muted border border-transparent shadow-none rounded-xl",
 
-        // Primary - Navy background
-        primary:
-          "bg-primary text-primary-foreground border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)]",
+      // Primary - Navy background
+      primary: "bg-primary text-primary-foreground shadow-[var(--shadow-soft-lg)]",
 
-        // Outline - Just hard border, no shadow
-        outline: "border-2 border-[var(--border-hard)] shadow-none",
+      // Outline - Just border, no shadow
+      outline: "border border-border shadow-none",
 
-        // Soft - Traditional soft shadow (for inputs, forms)
-        soft: "border border-border shadow-[var(--shadow-soft-md)]",
+      // Soft - Traditional soft shadow (for inputs, forms)
+      soft: "border border-border shadow-[var(--shadow-soft-md)]",
 
-        // Checkerboard - Street pattern background
-        checkerboard:
-          "bg-checkerboard border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)]",
-      },
-      padding: {
-        none: "",
-        sm: "p-4",
-        default: "p-6",
-        lg: "p-8",
-      },
+      // Muted background
+      checkerboard: "bg-muted border border-border shadow-[var(--shadow-soft-sm)]",
     },
-    defaultVariants: {
-      variant: "default",
-      padding: "default",
+    padding: {
+      none: "",
+      sm: "p-4",
+      default: "p-6",
+      lg: "p-8",
     },
-  }
-);
+  },
+  defaultVariants: {
+    variant: "default",
+    padding: "default",
+  },
+});
 
 export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {}
 
 function Card({ className, variant, padding, ...props }: CardProps) {
   return (
@@ -89,10 +80,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
   return (
     <h3
       data-slot="card-title"
-      className={cn(
-        "text-xl font-semibold leading-tight tracking-tight",
-        className
-      )}
+      className={cn("text-xl leading-tight font-semibold tracking-tight", className)}
       {...props}
     />
   );
@@ -102,25 +90,19 @@ function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="card-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
   );
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div data-slot="card-content" className={cn("", className)} {...props} />
-  );
+  return <div data-slot="card-content" className={cn("", className)} {...props} />;
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="card-footer"
-      className={cn("flex items-center pt-4", className)}
-      {...props}
-    />
+    <div data-slot="card-footer" className={cn("flex items-center pt-4", className)} {...props} />
   );
 }
 
@@ -141,7 +123,7 @@ function CardImage({
     <div
       data-slot="card-image"
       className={cn(
-        "relative overflow-hidden rounded-t -mx-6 -mt-6 mb-4 border-b-2 border-[var(--border-hard)]",
+        "relative -mx-6 -mt-6 mb-4 overflow-hidden rounded-t-xl",
         aspectClasses[aspectRatio],
         className
       )}
@@ -150,26 +132,17 @@ function CardImage({
   );
 }
 
-// Special card for sticker-style presentation
+// Special card for featured presentation
 function StickerCard({
   className,
-  rotation = "left",
+  rotation: _,
   ...props
 }: CardProps & { rotation?: "left" | "right" | "none" }) {
-  const rotationClass = {
-    left: "-rotate-1",
-    right: "rotate-1",
-    none: "",
-  };
-
+  void _; // Intentionally unused - kept for API compatibility
   return (
     <Card
       variant="default"
-      className={cn(
-        rotationClass[rotation],
-        "hover:rotate-0 transition-transform duration-100",
-        className
-      )}
+      className={cn("transition-all duration-200 hover:translate-y-[-4px]", className)}
       {...props}
     />
   );

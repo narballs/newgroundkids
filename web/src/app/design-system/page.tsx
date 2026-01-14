@@ -5,9 +5,6 @@ import {
   Heart,
   Trophy,
   Users,
-  Star,
-  Clock,
-  Calendar,
   ArrowRight,
   Check,
   X,
@@ -15,6 +12,7 @@ import {
   Info,
   Zap,
   Flame,
+  Sparkles,
 } from "lucide-react";
 
 // Layout
@@ -31,19 +29,25 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
   StickerCard,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Rating } from "@/components/ui/rating";
 import { AgeTag } from "@/components/ui/age-tag";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Sticker, StickerNew, StickerPopular, StickerSale } from "@/components/ui/sticker";
 import {
-  Sticker,
-  StickerNew,
-  StickerPopular,
-  StickerSale,
-} from "@/components/ui/sticker";
+  ComicBurst,
+  BurstNew,
+  BurstPow,
+  BurstBam,
+  BurstSale,
+  BurstHot,
+  BurstGo,
+  BurstWin,
+} from "@/components/ui/comic-burst";
+import { SpeechBubble, ComicPanel, CaptionBox } from "@/components/ui/speech-bubble";
+import { HeroCharacter } from "@/components/ui/hero-character";
 
 // Section Components
 import { SectionHeader } from "@/components/sections/section-header";
@@ -63,7 +67,7 @@ import { NewsletterForm } from "@/components/forms/newsletter-form";
 
 // Data
 import { testimonials } from "@/data/testimonials";
-import { partyPackages } from "@/data/packages";
+import { birthdayPackages } from "@/data/birthday-packages";
 import { camps } from "@/data/camps";
 
 // Sample Data
@@ -71,20 +75,17 @@ const sampleFeatures = [
   {
     icon: Shield,
     title: "Safe Environment",
-    description:
-      "Certified instructors and padded facilities for worry-free training.",
+    description: "Certified instructors and padded facilities for worry-free training.",
   },
   {
     icon: Heart,
     title: "Character Building",
-    description:
-      "We emphasize respect, discipline, and kindness in every class.",
+    description: "We emphasize respect, discipline, and kindness in every class.",
   },
   {
     icon: Trophy,
     title: "Achievement System",
-    description:
-      "Belt promotions and awards that celebrate your child's progress.",
+    description: "Belt promotions and awards that celebrate your child's progress.",
   },
   {
     icon: Users,
@@ -125,115 +126,287 @@ const sampleStats = [
 
 export default function DesignSystemPage() {
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Hero Header - Red Belt Edition */}
+    <div className="bg-background relative min-h-screen">
+      {/* Hero Header - Confident Play Edition */}
       <div className="bg-primary relative overflow-hidden">
-        {/* Top accent - Red stripe */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-accent" />
-
-        <Container className="py-16 md:py-24 relative">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <Container className="relative py-16 md:py-24">
+          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <Sticker variant="accent" rotation="left" size="lg">
-                  <Zap className="w-4 h-4 mr-1 inline" />
-                  Red Belt Edition
-                </Sticker>
-                <Sticker variant="default" rotation="right" size="sm">
-                  v3.0
-                </Sticker>
+              <div className="mb-6 flex flex-wrap items-center gap-4">
+                <Badge variant="accent" className="text-sm">
+                  v5.0
+                </Badge>
+                <CaptionBox variant="accent" className="inline-block">
+                  <Zap className="mr-1 inline h-4 w-4" />
+                  Confident Play Edition
+                </CaptionBox>
               </div>
-              <h1 className="font-heading text-5xl md:text-7xl text-white mb-4">
+              <h1 className="font-heading mb-4 text-5xl text-white md:text-7xl">
                 NGK Design System
               </h1>
-              <p className="text-xl text-white/80 max-w-2xl">
-                Black. White. Red. Premium street aesthetic inspired by Vans + AOJ.
-                Clean, bold, pro skate shop energy.
+              <p className="max-w-2xl text-xl text-white/90">
+                Modern, welcoming, professional. Soft shadows, rounded corners, and a color palette
+                that parents trust.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <StickerNew size="lg" />
-              <StickerPopular size="lg" />
+            <div className="flex flex-wrap items-center gap-4">
+              <BurstNew />
+              <Badge variant="accent" size="lg">
+                Safe & Fun
+              </Badge>
             </div>
           </div>
         </Container>
-
-        {/* Bottom accent - Red stripe */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-accent" />
       </div>
 
-      {/* Red Belt Showcase */}
-      <Section spacing="lg" className="bg-checkerboard">
+      {/* Components Showcase */}
+      <Section spacing="lg" className="bg-muted">
         <Container>
           <SectionHeader
-            badge="Red Belt Aesthetic"
-            title="Black + White + Red"
-            subtitle="Premium street style inspired by Vans and Art of Jiu Jitsu"
+            badge="Components"
+            title="UI Components"
+            subtitle="Clean, modern, and welcoming design components"
           />
 
-          <Grid cols={1} colsMd={3} gap="lg" className="mt-12">
-            {/* Hard Shadows Demo */}
-            <Card variant="default" className="bg-white">
-              <CardHeader>
-                <CardTitle>Hard Shadows</CardTitle>
-                <CardDescription>
-                  Offset shadows that pop off the page
-                </CardDescription>
+          <Grid cols={1} colsMd={2} colsLg={3} gap="lg" className="mt-12">
+            {/* Badges Demo */}
+            <ComicPanel className="p-6">
+              <CardHeader className="mb-4 p-0">
+                <CardTitle>Callout Badges</CardTitle>
+                <CardDescription>Clean pill-shaped badges</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Stack gap="sm">
-                  <div className="h-8 w-full bg-primary rounded-sm shadow-hard-xs" />
-                  <div className="h-8 w-full bg-primary rounded-sm shadow-hard-sm" />
-                  <div className="h-8 w-full bg-primary rounded-sm shadow-hard" />
-                  <div className="h-8 w-full bg-primary rounded-sm shadow-hard-lg" />
-                  <div className="h-8 w-full bg-accent rounded-sm shadow-hard-accent" />
-                </Stack>
-              </CardContent>
-            </Card>
+              <div className="flex flex-wrap items-center justify-center gap-4 py-4">
+                <BurstNew />
+                <BurstHot />
+                <BurstGo />
+              </div>
+            </ComicPanel>
 
-            {/* Sticker Component Demo */}
-            <Card variant="default" className="bg-white">
-              <CardHeader>
-                <CardTitle>Stickers</CardTitle>
-                <CardDescription>
-                  Slap-style labels with rotation
-                </CardDescription>
+            {/* Quote Cards Demo */}
+            <ComicPanel className="p-6">
+              <CardHeader className="mb-4 p-0">
+                <CardTitle>Quote Cards</CardTitle>
+                <CardDescription>Testimonials and feedback</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-3">
-                  <Sticker rotation="left">Default</Sticker>
-                  <Sticker variant="accent" rotation="right">
-                    Accent
-                  </Sticker>
-                  <Sticker variant="primary" rotation="left">
-                    Primary
-                  </Sticker>
-                  <Sticker variant="success" rotation="right">
-                    Success
-                  </Sticker>
-                  <Sticker variant="error" rotation="left-more">
-                    Error
-                  </Sticker>
-                </div>
-              </CardContent>
-            </Card>
+              <div className="space-y-6">
+                <SpeechBubble author="Happy Parent">My kids love it here!</SpeechBubble>
+              </div>
+            </ComicPanel>
 
-            {/* Pattern Demo */}
-            <Card variant="default" className="bg-white overflow-hidden">
-              <CardHeader>
-                <CardTitle>Patterns</CardTitle>
-                <CardDescription>
-                  Checkerboard and stripe textures
-                </CardDescription>
+            {/* Backgrounds Demo */}
+            <ComicPanel className="p-6">
+              <CardHeader className="mb-4 p-0">
+                <CardTitle>Background Styles</CardTitle>
+                <CardDescription>Subtle, clean backgrounds</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="h-16 bg-checkerboard rounded-sm border-2 border-[var(--border-hard)]" />
-                <div className="h-16 bg-checkerboard-lg rounded-sm border-2 border-[var(--border-hard)]" />
-                <div className="h-16 bg-stripes rounded-sm border-2 border-[var(--border-hard)]" />
-              </CardContent>
-            </Card>
+              <Stack gap="sm">
+                <div className="bg-muted h-12 rounded-lg" />
+                <div className="bg-accent/10 h-12 rounded-lg" />
+                <div className="from-accent/10 to-accent/20 h-12 rounded-lg bg-gradient-to-r" />
+              </Stack>
+            </ComicPanel>
+
+            {/* Shadows Demo */}
+            <ComicPanel className="p-6">
+              <CardHeader className="mb-4 p-0">
+                <CardTitle>Soft Shadows</CardTitle>
+                <CardDescription>Elevation with soft shadows</CardDescription>
+              </CardHeader>
+              <Stack gap="md">
+                <div className="h-10 w-full rounded-lg bg-white shadow-[var(--shadow-soft-sm)]" />
+                <div className="h-10 w-full rounded-lg bg-white shadow-[var(--shadow-soft-md)]" />
+                <div className="h-10 w-full rounded-lg bg-white shadow-[var(--shadow-soft-lg)]" />
+              </Stack>
+            </ComicPanel>
+
+            {/* Labels Demo */}
+            <ComicPanel className="p-6">
+              <CardHeader className="mb-4 p-0">
+                <CardTitle>Label Boxes</CardTitle>
+                <CardDescription>Section labels and captions</CardDescription>
+              </CardHeader>
+              <Stack gap="sm">
+                <CaptionBox>Getting Started</CaptionBox>
+                <CaptionBox variant="dark">Pro Tip</CaptionBox>
+                <CaptionBox variant="accent">
+                  <Sparkles className="mr-1 inline h-4 w-4" />
+                  New Feature
+                </CaptionBox>
+              </Stack>
+            </ComicPanel>
+
+            {/* Typography Demo */}
+            <ComicPanel className="bg-primary p-6">
+              <CardHeader className="mb-4 p-0">
+                <CardTitle className="text-white">Typography</CardTitle>
+                <CardDescription className="text-white/70">Clean, readable text</CardDescription>
+              </CardHeader>
+              <Stack gap="md" className="text-center">
+                <span className="font-heading text-3xl text-white">HEADLINES</span>
+                <span className="font-heading text-accent text-2xl">ACCENT TEXT</span>
+                <span className="text-lg text-white/90">Body copy</span>
+              </Stack>
+            </ComicPanel>
           </Grid>
+        </Container>
+      </Section>
+
+      {/* Superhero Graphics Showcase */}
+      <Section spacing="lg" className="relative overflow-hidden bg-white">
+        {/* Background elements */}
+        <div className="bg-action-lines absolute inset-0 opacity-50" />
+
+        <Container>
+          <SectionHeader
+            badge="Superhero Graphics"
+            title="Dynamic Characters"
+            subtitle="Cutout effects, halftone overlays, and action poses"
+          />
+
+          <div className="mt-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            {/* Left: Character Showcase */}
+            <div className="relative">
+              <ComicPanel className="bg-sky-100/50 p-8" borderWidth="thick">
+                <div className="absolute top-4 left-4 z-20">
+                  <ComicBurst fill="#14b8a6" size="sm" rotation={-10}>
+                    COACH!
+                  </ComicBurst>
+                </div>
+
+                <div className="flex h-[400px] items-end justify-center">
+                  {/* Using a placeholder since we don't have real photos yet */}
+                  <HeroCharacter
+                    src="/images/team/mike-frausto.jpg"
+                    alt="Coach Mike"
+                    size="full"
+                    effect="speed"
+                    className="z-10"
+                  />
+                </div>
+
+                <div className="absolute right-8 bottom-8 z-20 max-w-[200px]">
+                  <SpeechBubble pointer="none" size="sm">
+                    <span className="font-heading text-lg">Ready to train like a hero?</span>
+                  </SpeechBubble>
+                </div>
+              </ComicPanel>
+            </div>
+
+            {/* Right: Layout Example */}
+            <div className="space-y-8">
+              <div>
+                <h3 className="font-heading mb-4 flex items-center gap-2 text-2xl">
+                  <span className="text-stroke-thin bg-black px-2 text-white">Action Layouts</span>
+                </h3>
+                <p className="text-muted-foreground mb-6 text-lg">
+                  Break the grid! Let characters overlap panels and bursts to create depth and
+                  excitement.
+                </p>
+              </div>
+
+              {/* Mini Panel Grid */}
+              <div className="grid h-[300px] grid-cols-2 gap-4">
+                <div className="bg-primary border-comic group relative overflow-hidden p-6 text-white transition-transform hover:scale-[1.02]">
+                  <div className="bg-halftone-light absolute inset-0 opacity-10" />
+                  <h4 className="font-heading skew-action relative z-10 text-3xl transition-transform group-hover:skew-x-0">
+                    JIU JITSU
+                  </h4>
+                  <ComicBurst
+                    fill="#fbbf24"
+                    size="sm"
+                    className="absolute right-2 bottom-2 rotate-12"
+                  >
+                    POW!
+                  </ComicBurst>
+                </div>
+
+                <div className="bg-accent border-comic group relative overflow-hidden p-6 text-white transition-transform hover:scale-[1.02]">
+                  <div className="bg-burst-lines absolute inset-0 opacity-20" />
+                  <h4 className="font-heading -skew-action relative z-10 text-right text-3xl transition-transform group-hover:skew-x-0">
+                    KICK BOXING
+                  </h4>
+                  <div className="absolute bottom-0 left-0 h-24 w-24 rounded-full bg-black/10 blur-xl" />
+                </div>
+
+                <div className="border-comic group relative col-span-2 flex items-center justify-between bg-white p-6 transition-colors hover:border-[var(--accent-500)]">
+                  <div>
+                    <CaptionBox variant="dark" className="mb-2 inline-block">
+                      Sign Up Today
+                    </CaptionBox>
+                    <h4 className="font-heading text-2xl">Start Your Journey</h4>
+                  </div>
+                  <BurstNew className="animate-comic-wobble" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Large Comic Burst Showcase */}
+      <Section spacing="md" className="bg-checkerboard overflow-hidden">
+        <Container>
+          <SectionHeader
+            badge="SVG Bursts"
+            title="Comic Sound Effects"
+            subtitle="Each burst has a unique shape, thick ink stroke, and hard shadow"
+          />
+          <div className="flex flex-wrap items-center justify-center gap-6 py-8">
+            <BurstPow />
+            <BurstBam />
+            <BurstWin />
+            <BurstSale />
+          </div>
+
+          {/* Burst Shapes Comparison */}
+          <div className="mt-8 border-t-2 border-[var(--border-hard)] pt-8">
+            <h4 className="mb-6 text-center font-semibold">Shape Variants</h4>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <div className="text-center">
+                <ComicBurst fill="#fbbf24" shape="starburst" size="default" rotation={0}>
+                  STAR
+                </ComicBurst>
+                <p className="text-muted-foreground mt-2 text-xs">starburst</p>
+              </div>
+              <div className="text-center">
+                <ComicBurst
+                  fill="#f97316"
+                  shape="explosion"
+                  size="default"
+                  rotation={5}
+                  textColor="white"
+                >
+                  BOOM
+                </ComicBurst>
+                <p className="text-muted-foreground mt-2 text-xs">explosion</p>
+              </div>
+              <div className="text-center">
+                <ComicBurst
+                  fill="#22c55e"
+                  shape="rounded"
+                  size="default"
+                  rotation={-3}
+                  textColor="white"
+                >
+                  SOFT
+                </ComicBurst>
+                <p className="text-muted-foreground mt-2 text-xs">rounded</p>
+              </div>
+              <div className="text-center">
+                <ComicBurst
+                  fill="#ef4444"
+                  shape="jagged"
+                  size="default"
+                  rotation={8}
+                  textColor="white"
+                >
+                  ZAP!
+                </ComicBurst>
+                <p className="text-muted-foreground mt-2 text-xs">jagged</p>
+              </div>
+            </div>
+          </div>
         </Container>
       </Section>
 
@@ -243,79 +416,71 @@ export default function DesignSystemPage() {
           <SectionHeader
             badge="Tokens"
             title="Color Palette"
-            subtitle="High contrast colors for maximum impact"
+            subtitle="Trustworthy teal accent with clean neutrals"
             align="left"
           />
 
-          <div className="space-y-8 mt-8">
+          <div className="mt-8 space-y-8">
             {/* Primary Colors */}
             <div>
-              <h4 className="font-semibold mb-3 flex items-center gap-2">
-                Primary (Navy){" "}
+              <h4 className="mb-3 flex items-center gap-2 font-semibold">
+                Primary (Jet Black){" "}
                 <Badge variant="default" size="sm">
-                  High Contrast
+                  Headlines
                 </Badge>
               </h4>
-              <div className="grid grid-cols-5 md:grid-cols-11 gap-2">
-                {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map(
-                  (shade) => (
-                    <div key={shade} className="text-center">
-                      <div
-                        className="h-12 rounded-sm border-2 border-[var(--border-hard)] shadow-hard-xs mb-1"
-                        style={{ backgroundColor: `var(--primary-${shade})` }}
-                      />
-                      <span className="text-xs text-muted-foreground font-semibold">
-                        {shade}
-                      </span>
-                    </div>
-                  )
-                )}
+              <div className="grid grid-cols-5 gap-2 md:grid-cols-11">
+                {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((shade) => (
+                  <div key={shade} className="text-center">
+                    <div
+                      className="shadow-hard-xs mb-1 h-12 rounded-sm border-2 border-[var(--border-hard)]"
+                      style={{ backgroundColor: `var(--primary-${shade})` }}
+                    />
+                    <span className="text-muted-foreground text-xs font-semibold">{shade}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Accent Colors */}
             <div>
-              <h4 className="font-semibold mb-3 flex items-center gap-2">
-                Accent (Amber){" "}
+              <h4 className="mb-3 flex items-center gap-2 font-semibold">
+                Accent (Teal){" "}
                 <Badge variant="accent" size="sm">
-                  Energy
+                  Trust
                 </Badge>
               </h4>
-              <div className="grid grid-cols-5 md:grid-cols-11 gap-2">
-                {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map(
-                  (shade) => (
-                    <div key={shade} className="text-center">
-                      <div
-                        className="h-12 rounded-sm border-2 border-[var(--border-hard)] shadow-hard-xs mb-1"
-                        style={{ backgroundColor: `var(--accent-${shade})` }}
-                      />
-                      <span className="text-xs text-muted-foreground font-semibold">
-                        {shade}
-                      </span>
-                    </div>
-                  )
-                )}
+              <div className="grid grid-cols-5 gap-2 md:grid-cols-11">
+                {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((shade) => (
+                  <div key={shade} className="text-center">
+                    <div
+                      className="mb-1 h-12 rounded-lg shadow-[var(--shadow-soft-sm)]"
+                      style={{ backgroundColor: `var(--accent-${shade})` }}
+                    />
+                    <span className="text-muted-foreground text-xs font-semibold">{shade}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Semantic Colors */}
             <div>
-              <h4 className="font-semibold mb-3">Semantic</h4>
+              <h4 className="mb-3 font-semibold">Semantic</h4>
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-sm bg-[var(--success-500)] border-2 border-[var(--border-hard)] shadow-hard-xs" />
+                  <div className="shadow-hard-xs h-10 w-10 rounded-sm border-2 border-[var(--border-hard)] bg-[var(--success-500)]" />
                   <span className="text-sm font-medium">Success</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-sm bg-[var(--warning-500)] border-2 border-[var(--border-hard)] shadow-hard-xs" />
+                  <div className="shadow-hard-xs h-10 w-10 rounded-sm border-2 border-[var(--border-hard)] bg-[var(--warning-500)]" />
                   <span className="text-sm font-medium">Warning</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-sm bg-[var(--error-500)] border-2 border-[var(--border-hard)] shadow-hard-xs" />
+                  <div className="shadow-hard-xs h-10 w-10 rounded-sm border-2 border-[var(--border-hard)] bg-[var(--error-500)]" />
                   <span className="text-sm font-medium">Error</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-sm bg-[var(--info-500)] border-2 border-[var(--border-hard)] shadow-hard-xs" />
+                  <div className="shadow-hard-xs h-10 w-10 rounded-sm border-2 border-[var(--border-hard)] bg-[var(--info-500)]" />
                   <span className="text-sm font-medium">Info</span>
                 </div>
               </div>
@@ -330,67 +495,47 @@ export default function DesignSystemPage() {
           <SectionHeader
             badge="Typography"
             title="Type Scale"
-            subtitle="Quicksand for warmth, Bebas Neue for impact"
+            subtitle="Libre Franklin for readability, Bebas Neue for IMPACT!"
             align="left"
           />
 
-          <div className="space-y-8 mt-8">
+          <div className="mt-8 space-y-8">
             <div className="space-y-6">
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
-                  Display 2XL
-                </span>
-                <h1 className="text-display-2xl font-heading text-white">
-                  Building Champions
-                </h1>
+                <span className="text-xs tracking-wider text-white/60 uppercase">Display 2XL</span>
+                <h1 className="text-display-2xl font-heading text-white">Building Champions</h1>
               </div>
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
-                  Display XL
-                </span>
-                <h2 className="text-display-xl font-heading text-white">
-                  Kids Martial Arts
-                </h2>
+                <span className="text-xs tracking-wider text-white/60 uppercase">Display XL</span>
+                <h2 className="text-display-xl font-heading text-white">Kids Martial Arts</h2>
               </div>
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
-                  Display LG
-                </span>
-                <h2 className="text-display-lg font-heading text-white">
-                  Sherman Oaks, CA
-                </h2>
+                <span className="text-xs tracking-wider text-white/60 uppercase">Display LG</span>
+                <h2 className="text-display-lg font-heading text-white">Sherman Oaks, CA</h2>
               </div>
             </div>
 
-            <div className="border-t border-white/20 pt-8 space-y-4">
+            <div className="space-y-4 border-t border-white/20 pt-8">
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
-                  Body XL
-                </span>
+                <span className="text-xs tracking-wider text-white/60 uppercase">Body XL</span>
                 <p className="text-xl text-white/90">
                   The quick brown fox jumps over the lazy dog.
                 </p>
               </div>
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
-                  Body LG
-                </span>
+                <span className="text-xs tracking-wider text-white/60 uppercase">Body LG</span>
                 <p className="text-lg text-white/90">
                   The quick brown fox jumps over the lazy dog.
                 </p>
               </div>
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
+                <span className="text-xs tracking-wider text-white/60 uppercase">
                   Body MD (Default)
                 </span>
-                <p className="text-white/90">
-                  The quick brown fox jumps over the lazy dog.
-                </p>
+                <p className="text-white/90">The quick brown fox jumps over the lazy dog.</p>
               </div>
               <div>
-                <span className="text-xs text-white/60 uppercase tracking-wider">
-                  Body SM
-                </span>
+                <span className="text-xs tracking-wider text-white/60 uppercase">Body SM</span>
                 <p className="text-sm text-white/90">
                   The quick brown fox jumps over the lazy dog.
                 </p>
@@ -410,10 +555,10 @@ export default function DesignSystemPage() {
             align="left"
           />
 
-          <div className="space-y-10 mt-8">
+          <div className="mt-8 space-y-10">
             {/* Variants */}
             <div>
-              <h4 className="font-semibold mb-4 flex items-center gap-2">
+              <h4 className="mb-4 flex items-center gap-2 font-semibold">
                 Variants{" "}
                 <Sticker size="sm" rotation="right">
                   Hover Me!
@@ -432,12 +577,9 @@ export default function DesignSystemPage() {
 
             {/* Dark variants */}
             <div className="bg-primary rounded-sm border-2 border-[var(--border-hard)] p-8">
-              <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+              <h4 className="mb-4 flex items-center gap-2 font-semibold text-white">
                 On Dark Background
-                <Badge
-                  variant="accent"
-                  className="shadow-[2px_2px_0px_0px_white]"
-                >
+                <Badge variant="accent" className="shadow-[2px_2px_0px_0px_white]">
                   Street
                 </Badge>
               </h4>
@@ -450,7 +592,7 @@ export default function DesignSystemPage() {
 
             {/* Sizes */}
             <div>
-              <h4 className="font-semibold mb-4">Sizes</h4>
+              <h4 className="mb-4 font-semibold">Sizes</h4>
               <div className="flex flex-wrap items-center gap-4">
                 <Button size="sm">Small</Button>
                 <Button size="default">Default</Button>
@@ -461,7 +603,7 @@ export default function DesignSystemPage() {
 
             {/* States */}
             <div>
-              <h4 className="font-semibold mb-4">States</h4>
+              <h4 className="mb-4 font-semibold">States</h4>
               <div className="flex flex-wrap items-center gap-4">
                 <Button loading>Loading</Button>
                 <Button disabled>Disabled</Button>
@@ -476,7 +618,7 @@ export default function DesignSystemPage() {
 
             {/* Soft variants */}
             <div>
-              <h4 className="font-semibold mb-4 flex items-center gap-2">
+              <h4 className="mb-4 flex items-center gap-2 font-semibold">
                 Soft Variants{" "}
                 <Badge variant="secondary" size="sm">
                   Subtle
@@ -501,7 +643,7 @@ export default function DesignSystemPage() {
             align="left"
           />
 
-          <div className="space-y-8 mt-8">
+          <div className="mt-8 space-y-8">
             {/* Standard variants */}
             <Card variant="default" className="bg-white">
               <CardHeader>
@@ -559,17 +701,15 @@ export default function DesignSystemPage() {
             <Card variant="default" className="bg-white">
               <CardHeader>
                 <CardTitle className="text-lg">Sticker Components</CardTitle>
-                <CardDescription>
-                  Slap these anywhere for attention
-                </CardDescription>
+                <CardDescription>Slap these anywhere for attention</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-wrap gap-4 items-center">
+                <div className="flex flex-wrap items-center gap-4">
                   <StickerNew />
                   <StickerPopular />
                   <StickerSale />
                   <Sticker variant="accent" rotation="left" size="lg">
-                    <Flame className="w-4 h-4 mr-1 inline" />
+                    <Flame className="mr-1 inline h-4 w-4" />
                     Hot Deal
                   </Sticker>
                   <Sticker variant="primary" rotation="right">
@@ -614,9 +754,7 @@ export default function DesignSystemPage() {
                 <CardDescription>Hard border and shadow</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Card content goes here.
-                </p>
+                <p className="text-muted-foreground text-sm">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -626,9 +764,7 @@ export default function DesignSystemPage() {
                 <CardDescription>Larger hard shadow</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Card content goes here.
-                </p>
+                <p className="text-muted-foreground text-sm">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -638,9 +774,7 @@ export default function DesignSystemPage() {
                 <CardDescription>Hover for pop effect</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Card content goes here.
-                </p>
+                <p className="text-muted-foreground text-sm">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -650,9 +784,7 @@ export default function DesignSystemPage() {
                 <CardDescription>Accent top border</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Card content goes here.
-                </p>
+                <p className="text-muted-foreground text-sm">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -662,9 +794,7 @@ export default function DesignSystemPage() {
                 <CardDescription>Amber shadow color</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Card content goes here.
-                </p>
+                <p className="text-muted-foreground text-sm">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -674,9 +804,7 @@ export default function DesignSystemPage() {
                 <CardDescription>Pattern background</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Card content goes here.
-                </p>
+                <p className="text-muted-foreground text-sm">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -686,18 +814,14 @@ export default function DesignSystemPage() {
                 <CardDescription>Slight rotation</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Hover to straighten!
-                </p>
+                <p className="text-muted-foreground text-sm">Hover to straighten!</p>
               </CardContent>
             </StickerCard>
 
             <Card variant="primary">
               <CardHeader>
                 <CardTitle className="text-white">Primary Card</CardTitle>
-                <CardDescription className="text-white/70">
-                  Navy background
-                </CardDescription>
+                <CardDescription className="text-white/70">Navy background</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-white/70">Card content goes here.</p>
@@ -712,12 +836,10 @@ export default function DesignSystemPage() {
         <Container>
           <Grid cols={1} colsMd={2} gap="xl">
             <div>
-              <h3 className="text-2xl font-heading text-white mb-6">Ratings</h3>
+              <h3 className="font-heading mb-6 text-2xl text-white">Ratings</h3>
               <Stack gap="lg">
                 <div>
-                  <span className="text-sm text-white/60 mb-2 block">
-                    Sizes
-                  </span>
+                  <span className="mb-2 block text-sm text-white/60">Sizes</span>
                   <Stack gap="md">
                     <Rating value={5} size="sm" />
                     <Rating value={4.5} size="md" />
@@ -726,9 +848,7 @@ export default function DesignSystemPage() {
                 </div>
 
                 <div>
-                  <span className="text-sm text-white/60 mb-2 block">
-                    With Value & Count
-                  </span>
+                  <span className="mb-2 block text-sm text-white/60">With Value & Count</span>
                   <Stack gap="md">
                     <Rating value={5} showValue />
                     <Rating value={4.5} showValue showCount count={127} />
@@ -739,25 +859,23 @@ export default function DesignSystemPage() {
             </div>
 
             <div>
-              <h3 className="text-2xl font-heading text-white mb-6">
-                Loading States
-              </h3>
+              <h3 className="font-heading mb-6 text-2xl text-white">Loading States</h3>
               <div className="flex items-end gap-8">
                 <div className="text-center">
                   <LoadingSpinner size="sm" />
-                  <p className="text-xs text-white/60 mt-2">Small</p>
+                  <p className="mt-2 text-xs text-white/60">Small</p>
                 </div>
                 <div className="text-center">
                   <LoadingSpinner size="md" />
-                  <p className="text-xs text-white/60 mt-2">Medium</p>
+                  <p className="mt-2 text-xs text-white/60">Medium</p>
                 </div>
                 <div className="text-center">
                   <LoadingSpinner size="lg" />
-                  <p className="text-xs text-white/60 mt-2">Large</p>
+                  <p className="mt-2 text-xs text-white/60">Large</p>
                 </div>
                 <div className="text-center">
                   <LoadingSpinner size="xl" />
-                  <p className="text-xs text-white/60 mt-2">XL</p>
+                  <p className="mt-2 text-xs text-white/60">XL</p>
                 </div>
               </div>
             </div>
@@ -777,27 +895,15 @@ export default function DesignSystemPage() {
             subtitle="Display features, benefits, or services in a grid"
           />
 
-          <div className="space-y-12 mt-8">
+          <div className="mt-8 space-y-12">
             <div>
-              <h4 className="text-center text-sm text-muted-foreground mb-6">
-                Cards Variant
-              </h4>
-              <FeatureGrid
-                features={sampleFeatures}
-                variant="cards"
-                columns={4}
-              />
+              <h4 className="text-muted-foreground mb-6 text-center text-sm">Cards Variant</h4>
+              <FeatureGrid features={sampleFeatures} variant="cards" columns={4} />
             </div>
 
             <div>
-              <h4 className="text-center text-sm text-muted-foreground mb-6">
-                Minimal Variant
-              </h4>
-              <FeatureGrid
-                features={sampleFeatures}
-                variant="minimal"
-                columns={4}
-              />
+              <h4 className="text-muted-foreground mb-6 text-center text-sm">Minimal Variant</h4>
+              <FeatureGrid features={sampleFeatures} variant="minimal" columns={4} />
             </div>
           </div>
         </Container>
@@ -806,11 +912,7 @@ export default function DesignSystemPage() {
       {/* Camp Cards */}
       <Section spacing="lg" className="bg-checkerboard">
         <Container>
-          <SectionHeader
-            badge="Cards"
-            title="Camp Cards"
-            subtitle="Display camp events"
-          />
+          <SectionHeader badge="Cards" title="Camp Cards" subtitle="Display camp events" />
 
           <Grid cols={1} colsMd={2} colsLg={3} gap="md" className="mt-8">
             {camps.slice(0, 3).map((camp) => (
@@ -823,15 +925,11 @@ export default function DesignSystemPage() {
       {/* Party Package Cards */}
       <Section spacing="lg" className="section-dark">
         <Container>
-          <SectionHeader
-            badge="Cards"
-            title="Package Cards"
-            subtitle="Birthday party packages"
-          />
+          <SectionHeader badge="Cards" title="Package Cards" subtitle="Birthday party packages" />
 
           <Grid cols={1} colsMd={3} gap="lg" className="mt-8">
-            {partyPackages.map((pkg) => (
-              <PackageCard key={pkg.id} package={pkg} />
+            {birthdayPackages.map((pkg) => (
+              <PackageCard key={pkg.id} package_={pkg} />
             ))}
           </Grid>
         </Container>
@@ -847,18 +945,9 @@ export default function DesignSystemPage() {
           />
 
           <Grid cols={1} colsMd={3} gap="md" className="mt-8">
-            <TestimonialCard
-              testimonial={testimonials[0]!}
-              variant="default"
-            />
-            <TestimonialCard
-              testimonial={testimonials[1]!}
-              variant="compact"
-            />
-            <TestimonialCard
-              testimonial={testimonials[2]!}
-              variant="featured"
-            />
+            <TestimonialCard testimonial={testimonials[0]!} variant="default" />
+            <TestimonialCard testimonial={testimonials[1]!} variant="compact" />
+            <TestimonialCard testimonial={testimonials[2]!} variant="featured" />
           </Grid>
         </Container>
       </Section>
@@ -891,7 +980,7 @@ export default function DesignSystemPage() {
               variant="card"
             />
 
-            <div className="bg-white rounded-sm border-2 border-white p-6">
+            <div className="rounded-sm border-2 border-white bg-white p-6">
               <NewsletterForm
                 title="Stay Updated"
                 description="Get news about camps, events, and special offers."

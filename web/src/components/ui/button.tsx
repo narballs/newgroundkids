@@ -4,60 +4,59 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background uppercase tracking-wide",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background uppercase tracking-wide",
   {
     variants: {
       variant: {
-        // Primary - Navy with hard shadow (main CTA)
+        // Primary - Navy with soft shadow (main CTA)
         default:
-          "bg-primary text-primary-foreground border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)] hover:shadow-[var(--shadow-hard-lg)] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-0 active:translate-y-0",
+          "bg-primary text-primary-foreground shadow-[var(--shadow-soft-md)] hover:shadow-[var(--shadow-soft-lg)] hover:translate-y-[-2px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-0",
 
-        // Secondary - Light background with hard border
+        // Secondary - Light background
         secondary:
-          "bg-secondary text-secondary-foreground border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)] hover:shadow-[var(--shadow-hard-lg)] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-0 active:translate-y-0",
+          "bg-secondary text-secondary-foreground border border-border shadow-[var(--shadow-soft-sm)] hover:shadow-[var(--shadow-soft-md)] hover:translate-y-[-2px] active:translate-y-0",
 
-        // Accent - Amber with hard shadow (attention-grabbing CTAs)
+        // Accent - Teal with soft shadow (attention-grabbing CTAs)
         accent:
-          "bg-accent text-foreground border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)] hover:shadow-[var(--shadow-hard-lg)] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-0 active:translate-y-0",
+          "bg-accent text-white shadow-[var(--shadow-hard-accent)] hover:shadow-[var(--shadow-hard-accent-lg)] hover:translate-y-[-2px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-0",
 
-        // Outline - Transparent with hard border
+        // Outline - Clean border
         outline:
-          "border-2 border-[var(--border-hard)] text-foreground bg-transparent shadow-[var(--shadow-hard)] hover:bg-primary hover:text-primary-foreground hover:shadow-[var(--shadow-hard-lg)] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-0 active:translate-y-0",
+          "border border-border text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:translate-y-[-2px] active:translate-y-0",
 
         // Ghost - No shadow, subtle hover
-        ghost:
-          "text-foreground hover:bg-muted border-2 border-transparent hover:border-[var(--border-hard)]",
+        ghost: "text-foreground hover:bg-muted",
 
         // Link - Text only with underline
-        link: "text-primary underline-offset-4 hover:underline p-0 h-auto font-medium normal-case tracking-normal",
+        link: "text-accent underline-offset-4 hover:underline p-0 h-auto font-medium normal-case tracking-normal",
 
-        // Destructive - Red with hard shadow
+        // Destructive - Warning style
         destructive:
-          "bg-destructive text-destructive-foreground border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)] hover:shadow-[var(--shadow-hard-lg)] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-0 active:translate-y-0",
+          "bg-destructive text-destructive-foreground shadow-[var(--shadow-soft-md)] hover:shadow-[var(--shadow-soft-lg)] hover:translate-y-[-2px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-0",
 
         // White - For dark backgrounds
         white:
-          "bg-white text-primary border-2 border-[var(--border-hard)] shadow-[var(--shadow-hard)] hover:shadow-[var(--shadow-hard-lg)] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[var(--shadow-hard-xs)] active:translate-x-0 active:translate-y-0",
+          "bg-white text-primary shadow-[var(--shadow-soft-md)] hover:shadow-[var(--shadow-soft-lg)] hover:translate-y-[-2px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-0",
 
         // White outline - For dark backgrounds
         "white-outline":
-          "border-2 border-white text-white bg-transparent shadow-[4px_4px_0px_0px_white] hover:bg-white hover:text-primary hover:shadow-[6px_6px_0px_0px_white] hover:translate-x-[-2px] hover:translate-y-[-2px] active:shadow-[2px_2px_0px_0px_white] active:translate-x-0 active:translate-y-0",
+          "border border-white/50 text-white bg-transparent hover:bg-white hover:text-primary hover:translate-y-[-2px] active:translate-y-0",
 
         // Soft variants (for inputs, less prominent actions)
         "soft-primary":
-          "bg-primary text-primary-foreground shadow-[var(--shadow-soft-md)] hover:shadow-[var(--shadow-soft-lg)] hover:translate-y-[-1px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-0",
+          "bg-primary text-primary-foreground shadow-[var(--shadow-soft-md)] hover:shadow-[var(--shadow-soft-lg)] hover:translate-y-[-2px] active:shadow-[var(--shadow-soft-sm)] active:translate-y-0",
 
         "soft-secondary":
           "bg-secondary text-secondary-foreground border border-border shadow-[var(--shadow-soft-sm)] hover:shadow-[var(--shadow-soft-md)] hover:bg-muted",
       },
       size: {
-        sm: "h-9 px-4 text-xs rounded-sm",
-        default: "h-11 px-6 text-sm rounded-sm",
-        lg: "h-13 px-8 text-base rounded",
-        xl: "h-15 px-10 text-lg rounded",
-        icon: "size-11 rounded-sm",
-        "icon-sm": "size-9 rounded-sm",
-        "icon-lg": "size-13 rounded",
+        sm: "h-9 px-4 text-xs rounded-md",
+        default: "h-11 px-6 text-sm rounded-lg",
+        lg: "h-13 px-8 text-base rounded-lg",
+        xl: "h-15 px-10 text-lg rounded-xl",
+        icon: "size-11 rounded-lg",
+        "icon-sm": "size-9 rounded-md",
+        "icon-lg": "size-13 rounded-lg",
       },
       fullWidth: {
         true: "w-full",
@@ -73,8 +72,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
 }
@@ -106,7 +104,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <>
             <svg
-              className="animate-spin -ml-1 h-4 w-4"
+              className="-ml-1 h-4 w-4 animate-spin"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
