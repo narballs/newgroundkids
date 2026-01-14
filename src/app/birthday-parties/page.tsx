@@ -34,6 +34,7 @@ import {
   birthdayStats,
 } from "@/data/birthday-packages";
 import { siteConfig } from "@/config/site";
+import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Birthday Parties",
@@ -75,11 +76,11 @@ const partyFAQs = [
 ];
 
 export default function BirthdayPartiesPage() {
-  // Images for the diagonal slices hero
+  // Images for the diagonal slices hero (using Vercel Blob storage)
   const heroSlices = [
-    { src: "/images/birthday/DSC00727.jpg", alt: "Kids celebrating at birthday party" },
-    { src: "/images/birthday/DSC00789.jpg", alt: "Party games and activities" },
-    { src: "/images/birthday/DSC00995.jpg", alt: "Birthday celebration fun" },
+    { src: images.birthday.DSC00727, alt: "Kids celebrating at birthday party" },
+    { src: images.birthday.DSC00789, alt: "Party games and activities" },
+    { src: images.birthday.DSC00995, alt: "Birthday celebration fun" },
   ];
 
   return (
@@ -134,7 +135,7 @@ export default function BirthdayPartiesPage() {
           {/* Mobile: Single Image */}
           <div className="absolute inset-0 md:hidden">
             <Image
-              src="/images/birthday/DSC00727.jpg"
+              src={images.birthday.DSC00727}
               alt="Kids birthday party"
               fill
               className="object-cover"
@@ -385,7 +386,7 @@ export default function BirthdayPartiesPage() {
               <div className="relative">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-[var(--shadow-soft-xl)]">
                   <Image
-                    src="/images/birthday/DSC00995.jpg"
+                    src={images.birthday.DSC00995}
                     alt="Instructor helping kids"
                     fill
                     className="object-cover"

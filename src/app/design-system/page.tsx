@@ -18,6 +18,7 @@ import {
 // Layout
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { images } from "@/lib/images";
 import { Grid } from "@/components/layout/grid";
 import { Stack } from "@/components/layout/stack";
 
@@ -275,9 +276,9 @@ export default function DesignSystemPage() {
                 </div>
 
                 <div className="flex h-[400px] items-end justify-center">
-                  {/* Using a placeholder since we don't have real photos yet */}
+                  {/* Using a placeholder image */}
                   <HeroCharacter
-                    src="/images/team/mike-frausto.jpg"
+                    src={images.birthday.DSC00727}
                     alt="Coach Mike"
                     size="full"
                     effect="speed"

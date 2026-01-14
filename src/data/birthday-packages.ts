@@ -1,6 +1,8 @@
 // Birthday Party Packages Data
 // Based on NewGround Kids official pricing
 
+import { images } from "@/lib/images";
+
 export interface BirthdayPackage {
   id: string;
   name: string;
@@ -143,18 +145,18 @@ export interface BirthdayImage {
 export const birthdayGalleryImages: BirthdayImage[] = [
   {
     id: "1",
-    src: "/images/birthday/DSC00727.jpg",
+    src: images.birthday.DSC00727,
     alt: "Kids training at birthday party",
     featured: true,
   },
-  { id: "2", src: "/images/birthday/DSC00728.jpg", alt: "Birthday party activity" },
-  { id: "3", src: "/images/birthday/DSC00995.jpg", alt: "Instructor with kids" },
-  { id: "4", src: "/images/birthday/DSC00808.jpg", alt: "Kids sparring" },
-  { id: "5", src: "/images/birthday/DSC00821.jpg", alt: "Training session" },
-  { id: "6", src: "/images/birthday/DSC06067.JPG", alt: "Kid with face paint" },
-  { id: "7", src: "/images/birthday/DSC06065.JPG", alt: "Photo booth setup" },
-  { id: "8", src: "/images/birthday/DSC06057.JPG", alt: "Party activities" },
-  { id: "9", src: "/images/birthday/DSC06039.JPG", alt: "Kids having fun" },
+  { id: "2", src: images.birthday.DSC00728, alt: "Birthday party activity" },
+  { id: "3", src: images.birthday.DSC00995, alt: "Instructor with kids" },
+  { id: "4", src: images.birthday.DSC00808, alt: "Kids sparring" },
+  { id: "5", src: images.birthday.DSC00821, alt: "Training session" },
+  { id: "6", src: images.birthday.DSC06067, alt: "Kid with face paint" },
+  { id: "7", src: images.birthday.DSC06065, alt: "Photo booth setup" },
+  { id: "8", src: images.birthday.DSC06057, alt: "Party activities" },
+  { id: "9", src: images.birthday.DSC06039, alt: "Kids having fun" },
 ];
 
 // Stats for the stats bar

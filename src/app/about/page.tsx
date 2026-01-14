@@ -23,6 +23,7 @@ import { Container } from "@/components/layout/container";
 import { StickyMobileCTA } from "@/components/layout/sticky-mobile-cta";
 
 import { siteConfig } from "@/config/site";
+import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -64,11 +65,11 @@ const stats = [
 ];
 
 export default function AboutPage() {
-  // Images for the diagonal slices hero
+  // Images for the diagonal slices hero (using Vercel Blob storage)
   const heroSlices = [
-    { src: "/images/about-bg.jpg", alt: "Kids having fun at NewGround Kids" },
-    { src: "/images/birthday/DSC00808.jpg", alt: "Birthday party celebration" },
-    { src: "/images/birthday/DSC06067.JPG", alt: "Kids activities" },
+    { src: images.backgrounds.about, alt: "Kids having fun at NewGround Kids" },
+    { src: images.birthday.DSC00808, alt: "Birthday party celebration" },
+    { src: images.birthday.DSC06067, alt: "Kids activities" },
   ];
 
   return (
@@ -123,7 +124,7 @@ export default function AboutPage() {
           {/* Mobile: Single Image */}
           <div className="absolute inset-0 md:hidden">
             <Image
-              src="/images/about-bg.jpg"
+              src={images.backgrounds.about}
               alt="Kids having fun at NewGround Kids"
               fill
               className="object-cover"
@@ -206,7 +207,7 @@ export default function AboutPage() {
               <div className="relative">
                 <div className="border-border shadow-hard-lg aspect-square overflow-hidden rounded-lg border-2">
                   <Image
-                    src="/images/programs-bg.jpg"
+                    src={images.backgrounds.programs}
                     alt="Kids at NewGround Kids"
                     fill
                     className="object-cover"
@@ -313,7 +314,7 @@ export default function AboutPage() {
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <div className="border-border shadow-hard-lg relative aspect-video overflow-hidden rounded-lg border-2">
                 <Image
-                  src="/images/events/venue-1.jpg"
+                  src={images.events.venue1}
                   alt="NewGround Kids facility with professional padded mats and obstacle equipment"
                   fill
                   className="object-cover"

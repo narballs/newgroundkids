@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ComingSoonPage } from "@/components/sections/coming-soon";
+import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Private Events & Rentals - Coming Soon",
@@ -21,20 +22,20 @@ export default function PrivateEventsPage() {
           subtitle="Corporate Events, Team Parties & Group Sessions"
           description="Unforgettable team building, school groups, and private celebrations. Our facility is perfect for groups of all sizes. Booking opening soon!"
           heroImage={{
-            src: "/images/events/hero.jpg",
+            src: images.events.hero,
             alt: "Kids training at New Ground Kids facility",
           }}
           secondaryImages={[
             {
-              src: "/images/events/venue-1.jpg",
+              src: images.events.venue1,
               alt: "Photo booth setup for events",
             },
             {
-              src: "/images/events/action-1.jpg",
+              src: images.events.action1,
               alt: "Kids sparring during event",
             },
             {
-              src: "/images/events/hero.jpg",
+              src: images.events.hero,
               alt: "Training session",
             },
           ]}

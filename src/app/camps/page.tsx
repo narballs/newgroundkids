@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ComingSoonPage } from "@/components/sections/coming-soon";
+import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Kids Camps - Coming Soon",
@@ -21,20 +22,20 @@ export default function CampsPage() {
           subtitle="Summer & Holiday Camps for Ages 4-12"
           description="Action-packed days of martial arts training, games, team challenges, and making new friends. Registration opening soon!"
           heroImage={{
-            src: "/images/camps/hero.jpg",
+            src: images.camps.hero,
             alt: "Kids training at New Ground Kids martial arts camp",
           }}
           secondaryImages={[
             {
-              src: "/images/camps/training-1.jpg",
+              src: images.camps.training1,
               alt: "Kids learning martial arts techniques",
             },
             {
-              src: "/images/camps/training-2.jpg",
+              src: images.camps.training2,
               alt: "Instructor teaching young students",
             },
             {
-              src: "/images/camps/hero.jpg",
+              src: images.camps.hero,
               alt: "Group training session",
             },
           ]}

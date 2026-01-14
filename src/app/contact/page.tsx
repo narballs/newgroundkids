@@ -13,6 +13,7 @@ import { StickyMobileCTA } from "@/components/layout/sticky-mobile-cta";
 import { ContactForm } from "@/components/forms/contact-form";
 
 import { siteConfig } from "@/config/site";
+import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -58,7 +59,7 @@ export default function ContactPage() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/birthday/DSC00771.jpg"
+              src={images.birthday.DSC00771}
               alt="NewGround Kids facility"
               fill
               className="object-cover brightness-[0.3]"

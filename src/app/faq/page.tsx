@@ -19,6 +19,7 @@ import { StickyMobileCTA } from "@/components/layout/sticky-mobile-cta";
 
 import { faqCategories, getFAQsByCategory } from "@/data/faqs";
 import { siteConfig } from "@/config/site";
+import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
@@ -37,7 +38,7 @@ export default function FAQPage() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/birthday/DSC00728.jpg"
+              src={images.birthday.DSC00728}
               alt="NewGround Kids activities"
               fill
               className="object-cover brightness-[0.25]"

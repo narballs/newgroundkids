@@ -26,17 +26,18 @@ import { PhotoMarquee } from "@/components/ui/photo-marquee";
 import { siteConfig } from "@/config/site";
 import { birthdayPackages } from "@/data/birthday-packages";
 import { getFeaturedTestimonials } from "@/data/testimonials";
+import { images, birthdayGallery, heroSlides } from "@/lib/images";
 
-// Photo gallery images for marquee
+// Photo gallery images for marquee (using Vercel Blob storage)
 const galleryImages = [
-  "/images/birthday/DSC00727.jpg",
-  "/images/birthday/DSC00771.jpg",
-  "/images/birthday/DSC00728.jpg",
-  "/images/birthday/DSC00789.jpg",
-  "/images/birthday/DSC00546.jpg",
-  "/images/birthday/DSC00549.jpg",
-  "/images/birthday/DSC00555.jpg",
-  "/images/birthday/DSC00703.jpg",
+  images.birthday.DSC00727,
+  images.birthday.DSC00771,
+  images.birthday.DSC00728,
+  images.birthday.DSC00789,
+  images.birthday.DSC00546,
+  images.birthday.DSC00549,
+  images.birthday.DSC00555,
+  images.birthday.DSC00703,
 ];
 
 const eventTypes = [
@@ -48,7 +49,7 @@ const eventTypes = [
     href: "/birthday-parties",
     cta: "View Packages",
     accent: true,
-    image: "/images/birthday/DSC00727.jpg",
+    image: images.birthday.DSC00727,
   },
   {
     icon: Tent,
@@ -58,7 +59,7 @@ const eventTypes = [
     href: "/camps",
     cta: "See Schedule",
     accent: false,
-    image: "/images/birthday/DSC06067.JPG",
+    image: images.birthday.DSC06067,
   },
   {
     icon: Building,
@@ -67,7 +68,7 @@ const eventTypes = [
     href: "/private-events",
     cta: "Request Quote",
     accent: false,
-    image: "/images/birthday/DSC00789.jpg",
+    image: images.birthday.DSC00789,
   },
 ];
 
@@ -97,12 +98,12 @@ const whyChooseUs = [
 export default function HomePage() {
   const featuredTestimonials = getFeaturedTestimonials().slice(0, 3);
 
-  // Images for the diagonal slices hero
-  const heroSlices = [
-    { src: "/images/hero/DSC00727.jpg", alt: "Kids having a blast at camp" },
-    { src: "/images/hero/DSC06067.JPG", alt: "Martial arts action" },
-    { src: "/images/hero/DSC00789.jpg", alt: "Group activities" },
-    { src: "/images/hero/DSC00995.jpg", alt: "Exciting party games" },
+  // Images for the diagonal slices hero (using Vercel Blob storage)
+  const heroSliceData = [
+    { src: images.hero.slide1, alt: "Kids having a blast at camp" },
+    { src: images.hero.slide4, alt: "Martial arts action" },
+    { src: images.hero.slide2, alt: "Group activities" },
+    { src: images.hero.slide3, alt: "Exciting party games" },
   ];
 
   return (
@@ -125,7 +126,7 @@ export default function HomePage() {
                 gap: "20px",
               }}
             >
-              {heroSlices.map((slice, index) => (
+              {heroSliceData.map((slice, index) => (
                 <div
                   key={index}
                   className="group relative h-full flex-1 overflow-hidden"
@@ -167,7 +168,7 @@ export default function HomePage() {
           {/* Mobile: Single Hero Image with overlay */}
           <div className="absolute inset-0 md:hidden">
             <Image
-              src="/images/hero/DSC00995.jpg"
+              src={images.hero.slide3}
               alt="NewGround Kids Party"
               fill
               className="object-cover object-center"
@@ -377,7 +378,7 @@ export default function HomePage() {
               <div className="relative">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-[var(--shadow-soft-xl)]">
                   <Image
-                    src="/images/home/DSC00808.jpg"
+                    src={images.birthday.DSC00808}
                     alt="Kids having fun at NewGround Kids"
                     fill
                     className="object-cover"
