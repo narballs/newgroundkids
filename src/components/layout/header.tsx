@@ -77,40 +77,59 @@ export function Header() {
           </SheetTrigger>
           <SheetContent
             side="right"
-            className="w-[300px] border-l-2 sm:w-[400px]"
+            className="flex w-[300px] flex-col border-l-2 p-0 sm:w-[350px]"
             aria-describedby={undefined}
           >
             <VisuallyHidden.Root>
               <SheetTitle>Navigation Menu</SheetTitle>
             </VisuallyHidden.Root>
-            <nav className="mt-8 flex flex-col gap-4">
-              {/* All nav items */}
-              {siteConfig.mainNav.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="font-heading hover:text-accent text-lg tracking-wide uppercase transition-colors"
-                >
-                  {item.title}
-                </Link>
-              ))}
 
-              <div className="mt-4 space-y-4 border-t-2 pt-4">
-                <a
-                  href={`tel:${siteConfig.contact.phoneRaw}`}
-                  className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
-                >
-                  <Phone className="h-5 w-5" />
-                  {siteConfig.contact.phone}
-                </a>
-                <Button asChild variant="accent" className="shadow-hard font-heading w-full">
-                  <Link href="/birthday-parties" onClick={() => setIsOpen(false)}>
-                    Book Now
-                  </Link>
-                </Button>
-              </div>
+            {/* Mobile Menu Header */}
+            <div className="border-border flex items-center border-b-2 px-6 py-5">
+              <Image
+                src="/logo.png"
+                alt={siteConfig.name}
+                width={120}
+                height={34}
+                style={{ height: 34, width: "auto" }}
+              />
+            </div>
+
+            {/* Navigation Links */}
+            <nav className="flex-1 overflow-y-auto px-4 py-6">
+              <ul className="space-y-1">
+                {siteConfig.mainNav.map((item, index) => (
+                  <li key={item.title}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className="font-heading hover:bg-accent/10 hover:text-accent active:bg-accent/20 flex items-center rounded-lg px-4 py-3.5 text-base tracking-wide uppercase transition-all"
+                      style={{ animationDelay: `${index * 50}ms` }}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </nav>
+
+            {/* Mobile Menu Footer */}
+            <div className="border-border bg-muted/50 mt-auto space-y-4 border-t-2 px-6 py-6">
+              <a
+                href={`tel:${siteConfig.contact.phoneRaw}`}
+                className="text-muted-foreground hover:text-foreground flex items-center gap-3 text-sm font-medium transition-colors"
+              >
+                <div className="bg-background flex h-10 w-10 items-center justify-center rounded-full border-2">
+                  <Phone className="h-4 w-4" />
+                </div>
+                {siteConfig.contact.phone}
+              </a>
+              <Button asChild variant="accent" className="shadow-hard font-heading h-12 w-full text-base">
+                <Link href="/birthday-parties" onClick={() => setIsOpen(false)}>
+                  Book Now
+                </Link>
+              </Button>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
