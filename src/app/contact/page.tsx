@@ -124,7 +124,7 @@ export default function ContactPage() {
         {/* Contact Form & Info */}
         <Section className="bg-background">
           <Container>
-            <div className="grid gap-12 lg:grid-cols-2">
+            <div className="grid items-start gap-12 lg:grid-cols-2">
               {/* Form */}
               <div>
                 <h2 className="mb-6">Send Us a Message</h2>
