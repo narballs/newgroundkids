@@ -391,17 +391,59 @@ Mobile:
 
 ---
 
+## Project Structure
+
+```
+ngk/
+├── docs/                 # Documentation
+├── scripts/              # PowerShell automation scripts
+│   ├── ship.ps1          # Validate + commit + push + deploy
+│   ├── start.ps1         # Start dev server
+│   ├── stop.ps1          # Clean build cache
+│   ├── sync.ps1          # Git sync with AI commit messages
+│   └── merge.ps1         # PR merge workflow
+├── src/                  # Next.js application
+│   ├── app/              # App router pages
+│   ├── components/       # React components
+│   ├── config/           # Site configuration
+│   ├── data/             # Static data (packages, camps, etc.)
+│   ├── lib/              # Utilities
+│   └── types/            # TypeScript types
+├── public/               # Static assets
+├── package.json          # Dependencies & scripts
+├── pnpm-lock.yaml        # Lockfile (pnpm)
+└── tsconfig.json         # TypeScript config
+```
+
+### Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Production build |
+| `pnpm ship` | Validate, commit, push (CI-safe) |
+| `pnpm sync` | Pull changes + AI commit message |
+| `pnpm dev-start` | Clean start (clears cache first) |
+
+### Deployment
+
+- **Platform:** Vercel
+- **Root Directory:** `.` (project root)
+- **Package Manager:** pnpm
+- **Node Version:** 22.x
+
+---
+
 ## File References
 
 | File | Path | Description |
 |------|------|-------------|
-| Unified Brand Data | `brand-assets/unified-brand.json` | Complete extracted brand data |
-| Apparel Brand Data | `brand-assets/newground-apparel/brand.json` | Apparel site specifics |
-| Jiu Jitsu Brand Data | `brand-assets/newground-jiujitsu/brand.json` | Academy site specifics |
+| Site Config | `src/config/site.ts` | Runtime site configuration |
 | Project Spec | `.briefs/NGK_SINGLE_TENANT_SPEC.md` | Full project specification |
-| Site Config | `web/src/config/site.ts` | Runtime site configuration |
+| Package Data | `src/data/packages.ts` | Birthday party packages |
+| Camp Data | `src/data/camps.ts` | Camp information |
 
 ---
 
-*Last Updated: January 12, 2026*  
-*Version: 2.0 (Events Pivot)*
+*Last Updated: January 18, 2026*  
+*Version: 2.1 (Flattened Structure)*
