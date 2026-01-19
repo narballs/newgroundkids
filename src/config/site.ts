@@ -22,6 +22,7 @@ export const siteConfig = {
     state: "CA",
     zip: "91403",
     fullAddress: "4617 Van Nuys Blvd, Unit B, Sherman Oaks, CA 91403",
+    shortAddress: "Sherman Oaks, CA",
     addressLink: "https://maps.google.com/?q=4617+Van+Nuys+Blvd,+Unit+B,+Sherman+Oaks,+CA+91403",
   },
 
@@ -67,7 +68,7 @@ export const siteConfig = {
   booking: {
     partiesUrl: "/birthday-parties",
     campsUrl: "/camps",
-    privateEventsUrl: "/private-events",
+    eventsUrl: "/events",
     calendarUrl: "https://cal.com/newgroundkids", // Cal.com for booking
     inquiryUrl: "/contact",
   },
@@ -76,7 +77,7 @@ export const siteConfig = {
   mainNav: [
     { title: "Birthday Parties", href: "/birthday-parties" },
     { title: "Camps", href: "/camps" },
-    { title: "Private Events", href: "/private-events" },
+    { title: "Events", href: "/events" },
     { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" },
   ],
@@ -87,7 +88,7 @@ export const siteConfig = {
       { title: "Birthday Parties", href: "/birthday-parties" },
       { title: "Summer Camps", href: "/camps" },
       { title: "Holiday Camps", href: "/camps" },
-      { title: "Private Events", href: "/private-events" },
+      { title: "Events", href: "/events" },
     ],
     company: [
       { title: "About Us", href: "/about" },

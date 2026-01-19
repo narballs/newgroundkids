@@ -140,6 +140,8 @@ interface CalPopupButtonProps {
   children: React.ReactNode;
   /** Button className */
   className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
   /** Pre-fill guest information */
   prefill?: {
     name?: string;
@@ -148,7 +150,13 @@ interface CalPopupButtonProps {
   };
 }
 
-export function CalPopupButton({ eventType, children, className, prefill }: CalPopupButtonProps) {
+export function CalPopupButton({
+  eventType,
+  children,
+  className,
+  style,
+  prefill,
+}: CalPopupButtonProps) {
   const calLink = eventType ? `${CALCOM_USERNAME}/${eventType}` : CALCOM_USERNAME;
 
   useEffect(() => {
@@ -168,6 +176,7 @@ export function CalPopupButton({ eventType, children, className, prefill }: CalP
   return (
     <button
       className={className}
+      style={style}
       data-cal-namespace="popup"
       data-cal-link={calLink}
       data-cal-config={JSON.stringify({

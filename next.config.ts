@@ -16,6 +16,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // Redirects for renamed routes
+  async redirects() {
+    return [
+      {
+        source: "/private-events",
+        destination: "/events",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

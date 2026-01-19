@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useId } from "react";
 import { Menu, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -17,6 +17,7 @@ import { siteConfig } from "@/config/site";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const sheetId = useId();
 
   return (
     <header className="border-border bg-background/95 supports-[backdrop-filter]:bg-background/85 sticky top-0 z-50 w-full border-b-2 backdrop-blur">
@@ -76,6 +77,7 @@ export function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent
+            id={sheetId}
             side="right"
             className="flex w-[300px] flex-col border-l-2 p-0 sm:w-[350px]"
             aria-describedby={undefined}
@@ -124,7 +126,11 @@ export function Header() {
                 </div>
                 {siteConfig.contact.phone}
               </a>
-              <Button asChild variant="accent" className="shadow-hard font-heading h-12 w-full text-base">
+              <Button
+                asChild
+                variant="accent"
+                className="shadow-hard font-heading h-12 w-full text-base"
+              >
                 <Link href="/birthday-parties" onClick={() => setIsOpen(false)}>
                   Book Now
                 </Link>

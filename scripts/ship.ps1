@@ -1291,64 +1291,91 @@ if (-not $aiFixesApplied) {
             Write-Status "[Pre-commit] Verifying AI fixes on staged files..." "STEP"
         }
     
-    # Run lint-staged in background with progress indicator
-    $preCommitStart = Get-Date
-    $preCommitEstimate = 15  # seconds
-    
-    $preCommitJob = Start-Job -ScriptBlock { 
-        Set-Location $using:PWD
-        $output = npx lint-staged --allow-empty 2>&1
-        @{
-            Output = $output
-            ExitCode = $LASTEXITCODE
-        }
-    }
-    
-    $lastUpdate = -10
-    while ($preCommitJob.State -eq 'Running') {
-        $elapsed = [int]((Get-Date) - $preCommitStart).TotalSeconds
-        # Print progress every 10 seconds
-        if ($elapsed -ge ($lastUpdate + 10)) {
-            $lastUpdate = $elapsed
-            $remaining = [math]::Max(0, $preCommitEstimate - $elapsed)
-            Write-Host "  Linting staged files... ${remaining}s remaining" -ForegroundColor Gray
-        }
-        Start-Sleep -Milliseconds 500
-    }
-    
-    $preCommitResult = Receive-Job -Job $preCommitJob
-    Remove-Job -Job $preCommitJob
-    $lintStagedOutput = $preCommitResult.Output
-    $lintStagedExitCode = $preCommitResult.ExitCode
-    $lintStagedOutputStr = $lintStagedOutput -join "`n"
-    
-    if ($lintStagedExitCode -eq 0) {
-        $preCommitPassed = $true
-        $preCommitTime = [int]((Get-Date) - $preCommitStart).TotalSeconds
-        Write-Status "[OK] Pre-commit: Staged files clean (${preCommitTime}s)" "OK"
-    }
-    else {
-        Write-Status "[FAIL] Pre-commit check failed" "ERROR"
+        # Run lint-staged in background with progress indicator
+        $preCommitStart = Get-Date
+        $preCommitEstimate = 30  # seconds (increased estimate)
+        $preCommitTimeout = 120  # 2 minute timeout
         
-        # Show the errors
-        $lintStagedOutput | ForEach-Object {
-            $line = $_.ToString()
-            if ($line -match "error|Error|ERR") {
-                Write-Status "   $line" "ERROR"
+        # Get the current directory for the job
+        $currentDir = (Get-Location).Path
+        
+        $preCommitJob = Start-Job -ScriptBlock { 
+            param($workDir)
+            Set-Location $workDir
+            $output = npx lint-staged --allow-empty 2>&1
+            @{
+                Output = $output
+                ExitCode = $LASTEXITCODE
             }
+        } -ArgumentList $currentDir
+        
+        $lastUpdate = -10
+        $timedOut = $false
+        while ($preCommitJob.State -eq 'Running') {
+            $elapsed = [int]((Get-Date) - $preCommitStart).TotalSeconds
+            
+            # Check for timeout
+            if ($elapsed -gt $preCommitTimeout) {
+                Stop-Job -Job $preCommitJob -ErrorAction SilentlyContinue
+                $timedOut = $true
+                Write-Host ""
+                Write-Status "[FAIL] Pre-commit check timed out after ${preCommitTimeout}s" "ERROR"
+                break
+            }
+            
+            # Print progress every 10 seconds
+            if ($elapsed -ge ($lastUpdate + 10)) {
+                $lastUpdate = $elapsed
+                if ($elapsed -le $preCommitEstimate) {
+                    $remaining = $preCommitEstimate - $elapsed
+                    Write-Host "  Linting staged files... ${remaining}s remaining" -ForegroundColor Gray
+                } else {
+                    Write-Host "  Linting staged files... ${elapsed}s elapsed (still working)" -ForegroundColor Yellow
+                }
+            }
+            Start-Sleep -Milliseconds 500
         }
         
-        # Try auto-fix with Claude Code
-        if ($claudeAvailable -and -not $NoAutoFix -and $preCommitAttempt -lt $MaxRetries) {
-            $fixed = Invoke-ClaudeCodeFix -ErrorType "Pre-commit (lint-staged)" -ErrorOutput $lintStagedOutputStr -Attempt $preCommitAttempt
-            if (-not $fixed) {
-                Write-Status "[AI] Auto-fix unsuccessful, will retry..." "WARN"
+        if ($timedOut) {
+            Remove-Job -Job $preCommitJob -Force -ErrorAction SilentlyContinue
+            $lintStagedOutput = @("Timed out after ${preCommitTimeout} seconds")
+            $lintStagedExitCode = 1
+            $lintStagedOutputStr = "Pre-commit check timed out"
+        } else {
+            $preCommitResult = Receive-Job -Job $preCommitJob
+            Remove-Job -Job $preCommitJob
+            $lintStagedOutput = $preCommitResult.Output
+            $lintStagedExitCode = $preCommitResult.ExitCode
+            $lintStagedOutputStr = $lintStagedOutput -join "`n"
+        }
+        
+        if ($lintStagedExitCode -eq 0) {
+            $preCommitPassed = $true
+            $preCommitTime = [int]((Get-Date) - $preCommitStart).TotalSeconds
+            Write-Status "[OK] Pre-commit: Staged files clean (${preCommitTime}s)" "OK"
+        }
+        else {
+            Write-Status "[FAIL] Pre-commit check failed" "ERROR"
+            
+            # Show the errors
+            $lintStagedOutput | ForEach-Object {
+                $line = $_.ToString()
+                if ($line -match "error|Error|ERR") {
+                    Write-Status "   $line" "ERROR"
+                }
+            }
+            
+            # Try auto-fix with Claude Code
+            if ($claudeAvailable -and -not $NoAutoFix -and $preCommitAttempt -lt $MaxRetries) {
+                $fixed = Invoke-ClaudeCodeFix -ErrorType "Pre-commit (lint-staged)" -ErrorOutput $lintStagedOutputStr -Attempt $preCommitAttempt
+                if (-not $fixed) {
+                    Write-Status "[AI] Auto-fix unsuccessful, will retry..." "WARN"
+                }
+            }
+            elseif ($preCommitAttempt -ge $MaxRetries) {
+                Write-Status "[FAIL] Max retries reached for pre-commit checks" "ERROR"
             }
         }
-        elseif ($preCommitAttempt -ge $MaxRetries) {
-            Write-Status "[FAIL] Max retries reached for pre-commit checks" "ERROR"
-        }
-    }
     }  # End while loop
     
     if (-not $preCommitPassed -and -not $Force) {
