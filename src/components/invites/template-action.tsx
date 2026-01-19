@@ -43,11 +43,11 @@ export const TemplateAction = forwardRef<HTMLDivElement, TemplateProps>(({ detai
         {/* Logo */}
         <div className="mb-4 flex justify-center">
           <Image
-            src="/NG_BLK-modified.webp"
+            src="/logo.png"
             alt="NewGround Kids"
-            width={50}
-            height={50}
-            className="h-10 w-10 object-contain invert"
+            width={120}
+            height={40}
+            className="h-8 w-auto object-contain invert"
           />
         </div>
 

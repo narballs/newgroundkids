@@ -69,7 +69,7 @@ export function PackageCard({
   const theme = colorThemes[color] || colorThemes.coral;
 
   return (
-    <div className={cn("relative h-full", featured && "pt-3.5", className)}>
+    <div className={cn("relative h-full pt-3.5", className)}>
       {/* Featured Badge - outside overflow container */}
       {featured && (
         <div className="absolute top-0 left-1/2 z-20 -translate-x-1/2">

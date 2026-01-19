@@ -24,21 +24,96 @@ import { formatDate } from "@/lib/utils";
 function BookingSuccessContent() {
   const searchParams = useSearchParams();
 
-  // Get booking data from URL params (passed by Cal.com redirect)
+  // Get booking data from URL params (passed by Cal.com redirect with "Forward parameters" enabled)
+  // Cal.com sends: attendeeName, email, attendeeStartTime (ISO), title, location, etc.
+
+  // Parse times from ISO format (attendeeStartTime is more reliable than startTime)
+  const attendeeStartTime = searchParams.get("attendeeStartTime") || "";
+  const rawStartTime = searchParams.get("startTime") || "";
+  const rawEndTime = searchParams.get("endTime") || "";
+
+  // Parse date and times
+  let formattedDate = "";
+  let formattedStartTime = "";
+  let formattedEndTime = "";
+
+  // Try to parse attendeeStartTime first (ISO format with timezone: "2026-01-20T11:00:00-08:00")
+  if (attendeeStartTime) {
+    const startDate = new Date(attendeeStartTime);
+    formattedDate = startDate.toISOString().split("T")[0] ?? ""; // YYYY-MM-DD
+    formattedStartTime = startDate.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    // Estimate end time (add 2 hours for party duration)
+    const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000);
+    formattedEndTime = endDate.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  } else if (rawStartTime) {
+    // Fallback: try to parse the raw startTime string
+    try {
+      const startDate = new Date(rawStartTime);
+      if (!isNaN(startDate.getTime())) {
+        formattedDate = startDate.toISOString().split("T")[0] ?? "";
+        formattedStartTime = startDate.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+      }
+    } catch {
+      // Leave empty if parsing fails
+    }
+
+    if (rawEndTime) {
+      try {
+        const endDate = new Date(rawEndTime);
+        if (!isNaN(endDate.getTime())) {
+          formattedEndTime = endDate.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          });
+        }
+      } catch {
+        // Leave empty if parsing fails
+      }
+    }
+  }
+
+  // Extract package name from title (format: "Birthday Party - Small between New Ground Jiu Jitsu and John")
+  const title = searchParams.get("title") || "";
+  let packageName = "Birthday Party";
+  if (title) {
+    // Try to extract package type from title
+    const match = title.match(/Birthday Party - (\w+)/i);
+    if (match) {
+      packageName = `Birthday Party - ${match[1]}`;
+    } else if (title.includes("Birthday")) {
+      packageName = "Birthday Party";
+    }
+  }
+
   const bookingData = {
-    // Parent info
-    name: searchParams.get("name") || "",
+    // Parent info - Cal.com uses "attendeeName" not "name" with Forward parameters
+    name: searchParams.get("attendeeName") || searchParams.get("name") || "",
     email: searchParams.get("email") || "",
-    // Party details (from Cal.com custom questions)
+    // Party details (from Cal.com custom questions if configured)
     childName: searchParams.get("childName") || searchParams.get("responses[childName]") || "",
     childAge: searchParams.get("childAge") || searchParams.get("responses[childAge]") || "",
     // Booking details
-    date: searchParams.get("date") || "",
-    startTime: searchParams.get("startTime") || "",
-    endTime: searchParams.get("endTime") || "",
-    eventType: searchParams.get("eventTypeSlug") || searchParams.get("eventType") || "",
+    date: formattedDate || searchParams.get("date")?.split("T")[0] || "",
+    startTime: formattedStartTime,
+    endTime: formattedEndTime,
     // Package info
-    packageName: searchParams.get("packageName") || "Birthday Party",
+    packageName,
+    // Additional Cal.com data
+    location: searchParams.get("location") || "",
+    paymentStatus: searchParams.get("redirect_status") || "",
   };
 
   // Format the time display
@@ -65,13 +140,13 @@ function BookingSuccessContent() {
           <div className="flex items-center justify-between py-4">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/NG_BLK-modified.webp"
+                src="/logo.png"
                 alt="NewGround Kids"
-                width={40}
+                width={120}
                 height={40}
-                className="h-8 w-8"
+                className="h-10 w-auto"
+                priority
               />
-              <span className="font-heading text-lg">NewGround Kids</span>
             </Link>
             <Link
               href="/birthday-parties"

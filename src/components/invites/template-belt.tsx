@@ -44,11 +44,11 @@ export const TemplateBelt = forwardRef<HTMLDivElement, TemplateProps>(({ details
         {/* Logo */}
         <div className="mb-4 flex justify-center">
           <Image
-            src="/NG_BLK-modified.webp"
+            src="/logo.png"
             alt="NewGround Kids"
-            width={60}
-            height={60}
-            className="h-12 w-12 object-contain invert"
+            width={120}
+            height={40}
+            className="h-10 w-auto object-contain invert"
           />
         </div>
 

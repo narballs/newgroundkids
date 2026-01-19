@@ -17,6 +17,45 @@ import { INVITE_TEMPLATES, DEFAULT_PARTY_DETAILS } from "@/types/invites";
 import type { PartyDetails, InviteTemplateId } from "@/types/invites";
 import { cn } from "@/lib/utils";
 
+// Helper to clean up messy time strings from Cal.com
+const formatTimeParam = (timeStr: string | null): string => {
+  if (!timeStr) return "";
+
+  // If it's a clean short string, return as-is
+  if (timeStr.length < 25 && !timeStr.includes("GMT")) {
+    return timeStr;
+  }
+
+  // Handle Cal.com's raw date string format
+  // e.g. "Tue Jan 20 2026 19:00:00 GMT+0000 (Coordinated Universal Time)"
+  if (timeStr.includes("GMT") || timeStr.includes("Universal Time")) {
+    try {
+      const parts = timeStr.split(" - ");
+      const formatPart = (str: string) => {
+        const date = new Date(str);
+        if (isNaN(date.getTime())) return "";
+        return date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+      };
+
+      const start = formatPart(parts[0] ?? "");
+      if (!start) return timeStr;
+
+      if (parts[1]) {
+        const end = formatPart(parts[1]);
+        if (end) return `${start} - ${end}`;
+      }
+      return start;
+    } catch {
+      return timeStr;
+    }
+  }
+  return timeStr;
+};
+
 // Template preview colors
 const templateColors: Record<InviteTemplateId, string> = {
   dojo: "bg-gradient-to-br from-teal-500 to-teal-900",
@@ -36,7 +75,8 @@ function InvitesPageContent() {
     const childName = searchParams.get("childName") || "";
     const childAge = parseInt(searchParams.get("childAge") || "") || DEFAULT_PARTY_DETAILS.childAge;
     const partyDate = searchParams.get("date") || "";
-    const partyTime = searchParams.get("time") || DEFAULT_PARTY_DETAILS.partyTime;
+    // Clean up time param (handles messy Cal.com date strings)
+    const partyTime = formatTimeParam(searchParams.get("time")) || DEFAULT_PARTY_DETAILS.partyTime;
 
     // Calculate RSVP date (1 week before party)
     let rsvpDate = "";
@@ -135,13 +175,12 @@ function InvitesPageContent() {
               <div className="bg-border h-6 w-px" />
               <Link href="/" className="flex items-center gap-2">
                 <Image
-                  src="/NG_BLK-modified.webp"
+                  src="/logo.png"
                   alt="NewGround Kids"
-                  width={40}
+                  width={120}
                   height={40}
-                  className="h-8 w-8"
+                  className="h-10 w-auto"
                 />
-                <span className="font-heading hidden text-lg sm:inline">NewGround Kids</span>
               </Link>
             </div>
             <div className="flex items-center gap-2">
@@ -270,30 +309,39 @@ function InvitesPageContent() {
                 <div className="rounded-xl bg-white p-6 shadow-[var(--shadow-soft-md)]">
                   <h2 className="font-heading mb-4 text-xl">Choose Your Design</h2>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {INVITE_TEMPLATES.map((template) => (
                       <button
                         key={template.id}
                         onClick={() => setSelectedTemplate(template.id)}
                         className={cn(
-                          "relative overflow-hidden rounded-xl border-2 transition-all",
+                          "group relative overflow-hidden rounded-xl border-2 text-left transition-all",
                           selectedTemplate === template.id
                             ? "border-accent ring-accent ring-2 ring-offset-2"
-                            : "border-border hover:border-accent/50"
+                            : "border-border hover:border-accent/50 hover:shadow-md"
                         )}
                       >
-                        {/* Preview */}
-                        <div className={cn("aspect-[4/5]", templateColors[template.id])} />
+                        {/* Preview Gradient */}
+                        <div className={cn("h-28", templateColors[template.id])} />
 
                         {/* Info */}
-                        <div className="bg-white p-3 text-left">
-                          <p className="text-sm font-medium">{template.name}</p>
-                          <p className="text-muted-foreground text-xs">{template.ageRange}</p>
+                        <div className="bg-white p-4">
+                          <div className="mb-1 flex items-start justify-between gap-2">
+                            <p className="font-heading text-base leading-tight font-bold">
+                              {template.name}
+                            </p>
+                            <span className="shrink-0 rounded-full bg-slate-100 px-2 py-1 text-[10px] font-bold tracking-wider text-slate-600 uppercase">
+                              {template.ageRange}
+                            </span>
+                          </div>
+                          <p className="text-muted-foreground text-sm leading-snug">
+                            {template.description}
+                          </p>
                         </div>
 
                         {/* Selected Check */}
                         {selectedTemplate === template.id && (
-                          <div className="bg-accent absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full">
+                          <div className="bg-accent absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full shadow-md">
                             <Check className="h-4 w-4 text-white" />
                           </div>
                         )}
@@ -317,19 +365,22 @@ function InvitesPageContent() {
                 </div>
               </div>
 
-              {/* Right: Preview */}
-              <div className="space-y-4">
-                <div className="rounded-xl bg-white p-6 shadow-[var(--shadow-soft-md)]">
-                  <div className="mb-4 flex items-center justify-between">
+              {/* Right: Preview - Sticky on desktop */}
+              <div className="h-fit space-y-4 lg:sticky lg:top-24">
+                <div className="flex min-h-[650px] flex-col items-center rounded-xl bg-white p-6 shadow-[var(--shadow-soft-md)]">
+                  {/* Header */}
+                  <div className="border-border mb-6 flex w-full items-center justify-between border-b pb-4">
                     <h2 className="font-heading text-xl">Live Preview</h2>
-                    <span className="text-muted-foreground text-xs">1080 × 1350 px</span>
+                    <span className="bg-muted text-muted-foreground rounded px-2 py-1 text-xs font-medium">
+                      1080 × 1350 px
+                    </span>
                   </div>
 
-                  {/* Preview Container */}
-                  <div className="flex justify-center overflow-hidden">
+                  {/* Centered Preview Area */}
+                  <div className="relative flex w-full flex-1 items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50/50 p-4">
                     <div
-                      className="overflow-hidden rounded-lg shadow-[var(--shadow-soft-lg)]"
-                      style={{ transform: "scale(0.65)", transformOrigin: "top center" }}
+                      className="origin-center overflow-hidden rounded-lg shadow-2xl transition-all duration-300 ease-in-out"
+                      style={{ transform: "scale(0.85)" }}
                     >
                       {renderTemplate()}
                     </div>

@@ -31,11 +31,11 @@ export const TemplateDojo = forwardRef<HTMLDivElement, TemplateProps>(({ details
         <div className="mb-6 flex justify-center">
           <div className="rounded-full bg-white p-3">
             <Image
-              src="/NG_BLK-modified.webp"
+              src="/logo.png"
               alt="NewGround Kids"
-              width={60}
-              height={60}
-              className="h-12 w-12 object-contain"
+              width={120}
+              height={40}
+              className="h-10 w-auto object-contain"
             />
           </div>
         </div>
