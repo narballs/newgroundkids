@@ -21,16 +21,25 @@ import { Container } from "@/components/layout/container";
 import { siteConfig } from "@/config/site";
 import { formatDate } from "@/lib/utils";
 
+// Helper to get real param value, skipping Cal.com placeholder syntax like {attendee_email}
+const getRealParam = (searchParams: URLSearchParams, key: string): string => {
+  const values = searchParams.getAll(key);
+  // Find the first value that isn't a placeholder (doesn't contain { and })
+  const realValue = values.find((v) => !v.includes("{") && !v.includes("}"));
+  return realValue || "";
+};
+
 function BookingSuccessContent() {
   const searchParams = useSearchParams();
 
   // Get booking data from URL params (passed by Cal.com redirect with "Forward parameters" enabled)
   // Cal.com sends: attendeeName, email, attendeeStartTime (ISO), title, location, etc.
 
-  // Parse times from ISO format (attendeeStartTime is more reliable than startTime)
-  const attendeeStartTime = searchParams.get("attendeeStartTime") || "";
+  // Parse times from ISO format - try multiple Cal.com param names
+  const attendeeStartTime = searchParams.get("attendeeStartTime") || searchParams.get("hostStartTime") || "";
   const rawStartTime = searchParams.get("startTime") || "";
   const rawEndTime = searchParams.get("endTime") || "";
+  const rawDate = searchParams.get("date") || "";
 
   // Parse date and times
   let formattedDate = "";
@@ -85,6 +94,29 @@ function BookingSuccessContent() {
     }
   }
 
+  // Final fallback: try to extract time from the date param if it includes time (ISO format)
+  if (!formattedStartTime && rawDate && rawDate.includes("T")) {
+    try {
+      const dateObj = new Date(rawDate);
+      if (!isNaN(dateObj.getTime())) {
+        formattedStartTime = dateObj.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+        // Estimate 2 hour party duration
+        const endDateObj = new Date(dateObj.getTime() + 2 * 60 * 60 * 1000);
+        formattedEndTime = endDateObj.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+      }
+    } catch {
+      // Leave empty if parsing fails
+    }
+  }
+
   // Extract package name from title (format: "Birthday Party - Small between New Ground Jiu Jitsu and John")
   const title = searchParams.get("title") || "";
   let packageName = "Birthday Party";
@@ -100,8 +132,9 @@ function BookingSuccessContent() {
 
   const bookingData = {
     // Parent info - Cal.com uses "attendeeName" not "name" with Forward parameters
-    name: searchParams.get("attendeeName") || searchParams.get("name") || "",
-    email: searchParams.get("email") || "",
+    // Use getRealParam to skip placeholder values like {attendee_name} or {attendee_email}
+    name: searchParams.get("attendeeName") || getRealParam(searchParams, "name") || "",
+    email: getRealParam(searchParams, "email") || "",
     // Party details (from Cal.com custom questions if configured)
     childName: searchParams.get("childName") || searchParams.get("responses[childName]") || "",
     childAge: searchParams.get("childAge") || searchParams.get("responses[childAge]") || "",

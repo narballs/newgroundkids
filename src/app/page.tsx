@@ -487,7 +487,7 @@ export default function HomePage() {
       </main>
 
       <Footer />
-      <StickyMobileCTA primaryHref="/birthday-parties" primaryText="Book Now" />
+      <StickyMobileCTA primaryHref="/birthday-parties" primaryText="Book Now" showPhone={false} />
     </>
   );
 }

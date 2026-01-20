@@ -68,7 +68,7 @@ function InvitesPageContent() {
   const searchParams = useSearchParams();
 
   // Check if we have pre-filled data from URL params (from booking confirmation)
-  const hasPrefilledData = searchParams.has("childName") || searchParams.has("date");
+  const hasPrefilledData = searchParams.has("childName") || searchParams.has("date") || searchParams.has("time");
 
   // Initialize state from URL params if available
   const getInitialDetails = useCallback((): PartyDetails => {
@@ -252,22 +252,21 @@ function InvitesPageContent() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="partyDate">Party Date</Label>
-                        <Input
-                          id="partyDate"
-                          type="date"
-                          value={partyDetails.partyDate}
-                          onChange={(e) => updateDetails("partyDate", e.target.value)}
-                        />
+                        <Label className="text-muted-foreground">Party Date</Label>
+                        <div className="border-border bg-muted/50 text-foreground flex h-10 items-center rounded-md border px-3 text-sm">
+                          {partyDetails.partyDate
+                            ? new Date(partyDetails.partyDate + "T12:00:00").toLocaleDateString(
+                                "en-US",
+                                { weekday: "short", month: "short", day: "numeric" }
+                              )
+                            : "From booking"}
+                        </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="partyTime">Party Time</Label>
-                        <Input
-                          id="partyTime"
-                          placeholder="2:00 PM - 4:00 PM"
-                          value={partyDetails.partyTime}
-                          onChange={(e) => updateDetails("partyTime", e.target.value)}
-                        />
+                        <Label className="text-muted-foreground">Party Time</Label>
+                        <div className="border-border bg-muted/50 text-foreground flex h-10 items-center rounded-md border px-3 text-sm">
+                          {partyDetails.partyTime || "From booking"}
+                        </div>
                       </div>
                     </div>
 
@@ -365,26 +364,41 @@ function InvitesPageContent() {
                 </div>
               </div>
 
-              {/* Right: Preview - Sticky on desktop */}
+                {/* Right: Preview - Sticky on desktop */}
               <div className="h-fit space-y-4 lg:sticky lg:top-24">
-                <div className="flex min-h-[650px] flex-col items-center rounded-xl bg-white p-6 shadow-[var(--shadow-soft-md)]">
+                <div className="flex flex-col items-center rounded-xl bg-white p-6 shadow-[var(--shadow-soft-md)]">
                   {/* Header */}
-                  <div className="border-border mb-6 flex w-full items-center justify-between border-b pb-4">
+                  <div className="border-border mb-4 flex w-full items-center justify-between border-b pb-4">
                     <h2 className="font-heading text-xl">Live Preview</h2>
                     <span className="bg-muted text-muted-foreground rounded px-2 py-1 text-xs font-medium">
                       1080 × 1350 px
                     </span>
                   </div>
 
-                  {/* Centered Preview Area */}
-                  <div className="relative flex w-full flex-1 items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50/50 p-4">
-                    <div
-                      className="origin-center overflow-hidden rounded-lg shadow-2xl transition-all duration-300 ease-in-out"
-                      style={{ transform: "scale(0.85)" }}
-                    >
-                      {renderTemplate()}
+                  {/* Preview Container - Exact aspect ratio match (4:5) */}
+                  <div
+                    className="relative w-full overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50/50"
+                    style={{ aspectRatio: "4 / 5", maxWidth: "400px" }}
+                  >
+                    {/* Scaled template centered - this is exactly what gets downloaded */}
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                      <div
+                        style={{
+                          width: "540px",
+                          height: "675px",
+                          transform: "scale(var(--preview-scale, 0.7))",
+                          transformOrigin: "center center",
+                        }}
+                        className="[--preview-scale:0.55] sm:[--preview-scale:0.65] lg:[--preview-scale:0.7]"
+                      >
+                        {renderTemplate()}
+                      </div>
                     </div>
                   </div>
+
+                  <p className="text-muted-foreground mt-2 text-center text-xs">
+                    Preview shows exact download appearance
+                  </p>
                 </div>
 
                 {/* Download Button - Desktop */}

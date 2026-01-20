@@ -53,7 +53,7 @@ export const upcomingEvents: RecurringEvent[] = [
     addressLine1: "4617 Van Nuys Blvd, Unit B",
     addressLine2: "Sherman Oaks, CA 91403",
     pricing: {
-      perChild: 35,
+      perChild: 40,
       description: "per child",
     },
     activities: [
