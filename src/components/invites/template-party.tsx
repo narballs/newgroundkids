@@ -42,9 +42,10 @@ export const TemplateParty = forwardRef<HTMLDivElement, TemplateProps>(({ detail
           <Image
             src="/logo.png"
             alt="NewGround Kids"
-            width={120}
-            height={40}
+            width={240}
+            height={60}
             className="h-8 w-auto object-contain"
+            unoptimized
           />
         </div>
 

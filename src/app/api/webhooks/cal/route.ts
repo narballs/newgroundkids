@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
       event: data.triggerEvent,
       title: data.payload?.title,
       attendee: data.payload?.attendees?.[0]?.email,
+      responses: data.payload?.responses, // Log full responses for debugging
     });
 
     // Only process booking created events
@@ -86,27 +87,85 @@ export async function POST(request: NextRequest) {
     // Extract custom responses (child name, age, etc.)
     const responses = booking.responses || {};
 
+    // Helper to extract value from Cal.com response (handles both string and object formats)
+    const extractValue = (value: unknown): string => {
+      if (!value) return "";
+      if (typeof value === "string") return value;
+      if (typeof value === "number") return String(value);
+      if (typeof value === "object" && value !== null) {
+        // Cal.com sometimes sends { value: "..." } or { label: "...", value: "..." }
+        const obj = value as Record<string, unknown>;
+        if ("value" in obj) return extractValue(obj.value);
+        if ("label" in obj) return extractValue(obj.label);
+        // Try to get first string value from object
+        for (const key of Object.keys(obj)) {
+          const val = extractValue(obj[key]);
+          if (val) return val;
+        }
+      }
+      return "";
+    };
+
+    // Find a response value by checking multiple possible key names (case-insensitive)
+    const findResponse = (keywords: string[]): string => {
+      // First try exact matches
+      for (const keyword of keywords) {
+        if (responses[keyword] !== undefined) {
+          return extractValue(responses[keyword]);
+        }
+      }
+      // Then try case-insensitive search
+      const responseKeys = Object.keys(responses);
+      for (const keyword of keywords) {
+        const lowerKeyword = keyword.toLowerCase();
+        for (const key of responseKeys) {
+          if (key.toLowerCase().includes(lowerKeyword)) {
+            return extractValue(responses[key]);
+          }
+        }
+      }
+      return "";
+    };
+
     // Common field names in Cal.com custom questions
-    const childName =
-      (responses["childName"] as string) ||
-      (responses["child_name"] as string) ||
-      (responses["Child's Name"] as string) ||
-      (responses["name"] as string) ||
-      "";
+    const childName = findResponse([
+      "childName",
+      "child_name",
+      "child-name",
+      "Child's Name",
+      "childs_name",
+      "name",
+      "child",
+      "kid",
+      "birthday_child",
+    ]);
 
-    const childAge =
-      (responses["childAge"] as string) ||
-      (responses["child_age"] as string) ||
-      (responses["Child's Age"] as string) ||
-      (responses["age"] as string) ||
-      "";
+    const childAge = findResponse([
+      "childAge",
+      "child_age",
+      "child-age",
+      "Child's Age",
+      "childs_age",
+      "age",
+      "turning",
+      "years",
+    ]);
 
-    // Format date and time
+    console.log("📝 Extracted booking data:", {
+      childName,
+      childAge,
+      attendeeName: attendee.name,
+      attendeeEmail: attendee.email,
+      rawResponses: JSON.stringify(responses),
+    });
+
+    // Format date and time using attendee's timezone
     const startDate = new Date(booking.startTime);
     const endDate = new Date(booking.endTime);
+    const attendeeTimezone = attendee.timeZone || "America/Los_Angeles";
 
     const partyDate = startDate.toISOString().split("T")[0] || "";
-    const partyTime = `${formatTime(startDate)} - ${formatTime(endDate)}`;
+    const partyTime = `${formatTimeInTimezone(startDate, attendeeTimezone)} - ${formatTimeInTimezone(endDate, attendeeTimezone)}`;
 
     // Determine package name from event title
     const packageName = booking.title || booking.eventTitle || "Birthday Party";
@@ -185,14 +244,25 @@ async function verifyWebhookSignature(body: string, signature: string): Promise<
 }
 
 /**
- * Format time to readable string (e.g., "2:00 PM")
+ * Format time to readable string in a specific timezone (e.g., "2:00 PM")
  */
-function formatTime(date: Date): string {
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
+function formatTimeInTimezone(date: Date, timezone: string): string {
+  try {
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: timezone,
+    });
+  } catch {
+    // Fallback if timezone is invalid
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "America/Los_Angeles",
+    });
+  }
 }
 
 // Also handle GET for webhook verification

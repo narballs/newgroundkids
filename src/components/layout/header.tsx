@@ -27,8 +27,8 @@ export function Header() {
           <Image
             src="/logo.png"
             alt={siteConfig.name}
-            width={140}
-            height={40}
+            width={280}
+            height={70}
             style={{ height: 40, width: "auto" }}
             className="transition-transform group-hover:scale-105"
             priority
@@ -91,8 +91,8 @@ export function Header() {
               <Image
                 src="/logo.png"
                 alt={siteConfig.name}
-                width={120}
-                height={34}
+                width={240}
+                height={60}
                 style={{ height: 34, width: "auto" }}
               />
             </div>

@@ -56,14 +56,6 @@ const formatTimeParam = (timeStr: string | null): string => {
   return timeStr;
 };
 
-// Template preview colors
-const templateColors: Record<InviteTemplateId, string> = {
-  dojo: "bg-gradient-to-br from-teal-500 to-teal-900",
-  action: "bg-gradient-to-br from-gray-900 to-teal-600",
-  party: "bg-gradient-to-br from-rose-300 to-amber-200",
-  belt: "bg-gradient-to-br from-gray-900 to-amber-600",
-};
-
 function InvitesPageContent() {
   const searchParams = useSearchParams();
 
@@ -142,11 +134,27 @@ function InvitesPageContent() {
     }
   }, [partyDetails.childName]);
 
-  // Render the selected template
+  // Render the selected template (for main preview with ref)
   const renderTemplate = () => {
     const props = { details: partyDetails, ref: templateRef };
 
     switch (selectedTemplate) {
+      case "action":
+        return <TemplateAction {...props} />;
+      case "party":
+        return <TemplateParty {...props} />;
+      case "belt":
+        return <TemplateBelt {...props} />;
+      default:
+        return <TemplateDojo {...props} />;
+    }
+  };
+
+  // Render a specific template for the selection thumbnails (no ref needed)
+  const renderPreviewTemplate = (templateId: InviteTemplateId) => {
+    const props = { details: partyDetails };
+
+    switch (templateId) {
       case "action":
         return <TemplateAction {...props} />;
       case "party":
@@ -177,9 +185,10 @@ function InvitesPageContent() {
                 <Image
                   src="/logo.png"
                   alt="NewGround Kids"
-                  width={120}
-                  height={40}
+                  width={240}
+                  height={60}
                   className="h-10 w-auto"
+                  priority
                 />
               </Link>
             </div>
@@ -320,8 +329,26 @@ function InvitesPageContent() {
                             : "border-border hover:border-accent/50 hover:shadow-md"
                         )}
                       >
-                        {/* Preview Gradient */}
-                        <div className={cn("h-28", templateColors[template.id])} />
+                        {/* Live Template Preview */}
+                        <div
+                          className="relative w-full overflow-hidden bg-slate-100"
+                          style={{ aspectRatio: "4/5" }}
+                        >
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div
+                              style={{
+                                width: "540px",
+                                height: "675px",
+                                transform: "scale(0.22)",
+                                transformOrigin: "center center",
+                              }}
+                            >
+                              {renderPreviewTemplate(template.id)}
+                            </div>
+                          </div>
+                          {/* Interaction overlay - prevents clicking inputs inside preview */}
+                          <div className="absolute inset-0 z-10" />
+                        </div>
 
                         {/* Info */}
                         <div className="bg-white p-4">

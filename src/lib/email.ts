@@ -44,7 +44,7 @@ export async function sendBookingConfirmationEmail(data: BookingEmailData) {
     const result = await resend.emails.send({
       from: FROM_EMAIL,
       to: parentEmail,
-      subject: `🎉 ${childName}'s Birthday Party is Confirmed!`,
+      subject: `🎉 ${childName ? `${childName}'s` : "Your"} Birthday Party is Confirmed!`,
       html: generateBookingEmailHtml({
         parentName,
         childName,
@@ -103,7 +103,7 @@ function generateBookingEmailHtml(data: EmailTemplateData): string {
           <!-- Logo Header -->
           <tr>
             <td align="center" style="padding-bottom: 30px;">
-              <img src="${siteConfig.url}/NG_BLK-modified.webp" alt="NewGround Kids" width="80" height="80" style="display: block;">
+              <img src="${siteConfig.url}/logo.png" alt="NewGround Kids" style="display: block; max-width: 280px; width: 100%; height: auto;">
             </td>
           </tr>
           
@@ -118,7 +118,7 @@ function generateBookingEmailHtml(data: EmailTemplateData): string {
                     <div style="font-size: 40px; margin-bottom: 10px;">🎉</div>
                     <h1 style="margin: 0; font-size: 28px; font-weight: bold;">You're All Set!</h1>
                     <p style="margin: 10px 0 0; font-size: 16px; opacity: 0.9;">
-                      ${childName}'s ${childAge}th birthday party is confirmed!
+                      ${childName ? `${childName}'s` : "Your"} ${childAge ? `${childAge}th ` : ""}birthday party is confirmed!
                     </p>
                   </td>
                 </tr>
@@ -130,7 +130,7 @@ function generateBookingEmailHtml(data: EmailTemplateData): string {
                   <td style="padding: 30px 40px;">
                     <p style="margin: 0 0 20px; color: #52525b;">Hi ${parentName.split(" ")[0]},</p>
                     <p style="margin: 0 0 25px; color: #52525b; line-height: 1.6;">
-                      We're excited to host ${childName}'s birthday party! Here are your booking details:
+                      We're excited to host ${childName ? `${childName}'s` : "your"} birthday party! Here are your booking details:
                     </p>
                     
                     <!-- Details Box -->
@@ -186,7 +186,7 @@ function generateBookingEmailHtml(data: EmailTemplateData): string {
                       🎨 Create Party Invites →
                     </a>
                     <p style="margin: 15px 0 0; color: rgba(255,255,255,0.7); font-size: 13px;">
-                      Pre-filled with ${childName}'s party details!
+                      ${childName ? `Pre-filled with ${childName}'s party details!` : "Pre-filled with your party details!"}
                     </p>
                   </td>
                 </tr>
@@ -266,11 +266,11 @@ function generateBookingEmailText(data: EmailTemplateData): string {
   return `
 🎉 YOU'RE ALL SET!
 
-${childName}'s ${childAge}th birthday party is confirmed!
+${childName ? `${childName}'s` : "Your"} ${childAge ? `${childAge}th ` : ""}birthday party is confirmed!
 
 Hi ${parentName.split(" ")[0]},
 
-We're excited to host ${childName}'s birthday party! Here are your booking details:
+We're excited to host ${childName ? `${childName}'s` : "your"} birthday party! Here are your booking details:
 
 📦 Package: ${packageName}
 📅 Date: ${formattedDate}
@@ -285,7 +285,7 @@ We're excited to host ${childName}'s birthday party! Here are your booking detai
 Design beautiful party invitations to share with your guests:
 ${inviteUrl}
 
-(Pre-filled with ${childName}'s party details!)
+(${childName ? `Pre-filled with ${childName}'s party details!` : "Pre-filled with your party details!"})
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -9,7 +9,7 @@ export const siteConfig = {
   tagline: "Epic Parties & Camps for Kids",
   description:
     "Unforgettable birthday parties and camps for kids in Sherman Oaks, CA. Action-packed packages, professional staff, stress-free planning.",
-  url: "https://newgroundkids.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://newgroundkids.com",
   ogImage: "https://newgroundkids.com/og-image.jpg",
 
   // Contact - Using New Ground facility location
