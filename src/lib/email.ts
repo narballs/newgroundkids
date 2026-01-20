@@ -103,7 +103,13 @@ function generateBookingEmailHtml(data: EmailTemplateData): string {
           <!-- Logo Header -->
           <tr>
             <td align="center" style="padding-bottom: 30px;">
-              <img src="${siteConfig.url}/logo.png" alt="NewGround Kids" style="display: block; max-width: 280px; width: 100%; height: auto;">
+              <table role="presentation" style="border-collapse: collapse;">
+                <tr>
+                  <td style="background-color: #ffffff; padding: 16px 24px; border-radius: 12px;">
+                    <img src="${siteConfig.url}/logo.png" alt="NewGround Kids" style="display: block; max-width: 220px; width: 100%; height: auto;">
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           
