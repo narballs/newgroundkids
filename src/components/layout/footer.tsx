@@ -22,11 +22,11 @@ export function Footer() {
           <div className="space-y-4 lg:col-span-1">
             <Link href="/" className="inline-block">
               <Image
-                src="/NG_BLK-modified.webp"
+                src="/logo.png"
                 alt={siteConfig.name}
-                width={160}
-                height={160}
-                className="h-16 w-auto"
+                width={280}
+                height={70}
+                className="h-12 w-auto"
               />
             </Link>
             <p className="text-primary-foreground/80 max-w-sm">{siteConfig.tagline}</p>

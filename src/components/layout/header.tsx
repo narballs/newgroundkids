@@ -21,9 +21,9 @@ export function Header() {
 
   return (
     <header className="border-border bg-background/95 supports-[backdrop-filter]:bg-background/85 sticky top-0 z-50 w-full border-b-2 backdrop-blur">
-      <div className="container-wide flex h-16 items-center justify-between">
+      <div className="container-tight flex h-16 items-center gap-6">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-2">
+        <Link href="/" className="group flex shrink-0 items-center gap-2">
           <Image
             src="/logo.png"
             alt={siteConfig.name}
@@ -36,7 +36,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="hidden lg:flex">
+        <NavigationMenu className="hidden flex-1 justify-center lg:flex">
           <NavigationMenuList className="gap-1">
             {/* All nav items from config (no dropdown needed for events) */}
             {siteConfig.mainNav.map((item) => (
@@ -55,7 +55,7 @@ export function Header() {
         </NavigationMenu>
 
         {/* Desktop CTA */}
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="ml-auto hidden shrink-0 items-center gap-4 lg:flex">
           <a
             href={`tel:${siteConfig.contact.phoneRaw}`}
             className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors"
@@ -63,14 +63,11 @@ export function Header() {
             <Phone className="h-4 w-4" />
             {siteConfig.contact.phone}
           </a>
-          <Button asChild variant="accent" className="shadow-hard-sm font-heading">
-            <Link href="/birthday-parties">Book Now</Link>
-          </Button>
         </div>
 
         {/* Mobile Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="lg:hidden">
+          <SheetTrigger asChild className="ml-auto lg:hidden">
             <Button variant="ghost" size="icon" className="border-2">
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle menu</span>
@@ -116,7 +113,7 @@ export function Header() {
             </nav>
 
             {/* Mobile Menu Footer */}
-            <div className="border-border bg-muted/50 mt-auto space-y-4 border-t-2 px-6 py-6">
+            <div className="border-border bg-muted/50 mt-auto border-t-2 px-6 py-6">
               <a
                 href={`tel:${siteConfig.contact.phoneRaw}`}
                 className="text-muted-foreground hover:text-foreground flex items-center gap-3 text-sm font-medium transition-colors"
@@ -126,15 +123,6 @@ export function Header() {
                 </div>
                 {siteConfig.contact.phone}
               </a>
-              <Button
-                asChild
-                variant="accent"
-                className="shadow-hard font-heading h-12 w-full text-base"
-              >
-                <Link href="/birthday-parties" onClick={() => setIsOpen(false)}>
-                  Book Now
-                </Link>
-              </Button>
             </div>
           </SheetContent>
         </Sheet>
