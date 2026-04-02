@@ -1,0 +1,430 @@
+<!--
+  New Ground Jiu Jitsu — Class Booking Guide
+  Paste this into a Squarespace Code Block.
+
+  UPDATE THE BOOKING URLS BELOW before publishing:
+  - FUNDAMENTALS_URL  → MyStudio link for Fundamentals class
+  - ALL_LEVELS_URL    → MyStudio link for All Levels class
+  - KIDS_4_6_URL      → MyStudio link for ages 4-6
+  - KIDS_7_12_URL     → MyStudio link for ages 7-12
+  - KIDS_13_PLUS_URL  → MyStudio link for ages 13+
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Franklin:wght@400;500;600&display=swap');
+
+  .ngbjj-booking-guide {
+    font-family: 'Libre Franklin', sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    color: #1E293B;
+  }
+
+  .ngbjj-booking-guide * {
+    box-sizing: border-box;
+  }
+
+  .ngbjj-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    color: #1E293B;
+  }
+
+  .ngbjj-subtitle {
+    font-size: 16px;
+    color: #64748B;
+    margin-bottom: 32px;
+  }
+
+  .ngbjj-step {
+    display: none;
+    animation: ngbjj-fadeIn 0.35s ease;
+  }
+
+  .ngbjj-step.active {
+    display: block;
+  }
+
+  @keyframes ngbjj-fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .ngbjj-question {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    margin-bottom: 24px;
+    color: #1E293B;
+  }
+
+  .ngbjj-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .ngbjj-btn {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    padding: 16px 24px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid #1E293B;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #1E293B;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .ngbjj-btn:hover {
+    background: #1E293B;
+    color: #FFFFFF;
+  }
+
+  .ngbjj-btn-primary {
+    background: #E53935;
+    border-color: #E53935;
+    color: #FFFFFF;
+  }
+
+  .ngbjj-btn-primary:hover {
+    background: #C62828;
+    border-color: #C62828;
+    color: #FFFFFF;
+  }
+
+  .ngbjj-back {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 14px;
+    color: #64748B;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'Libre Franklin', sans-serif;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  .ngbjj-back:hover {
+    color: #1E293B;
+  }
+
+  .ngbjj-progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .ngbjj-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #E2E8F0;
+    transition: background 0.3s ease;
+  }
+
+  .ngbjj-dot.filled {
+    background: #E53935;
+  }
+
+  .ngbjj-result-card {
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 32px 24px;
+    margin-bottom: 20px;
+  }
+
+  .ngbjj-result-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    margin: 0 0 8px 0;
+    color: #1E293B;
+  }
+
+  .ngbjj-result-card p {
+    font-size: 15px;
+    color: #64748B;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+  }
+
+  .ngbjj-age-input-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ngbjj-age-input {
+    width: 120px;
+    padding: 14px;
+    font-size: 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    text-align: center;
+    border: 2px solid #CBD5E1;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .ngbjj-age-input:focus {
+    border-color: #E53935;
+  }
+
+  .ngbjj-age-hint {
+    font-size: 13px;
+    color: #94A3B8;
+  }
+
+  .ngbjj-error {
+    color: #EF4444;
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .ngbjj-title { font-size: 28px; }
+    .ngbjj-question { font-size: 24px; }
+    .ngbjj-booking-guide { padding: 24px 16px; }
+  }
+</style>
+
+<div class="ngbjj-booking-guide">
+  <h2 class="ngbjj-title">Find Your Perfect Class</h2>
+  <p class="ngbjj-subtitle">Answer a few quick questions and we'll guide you to the right fit.</p>
+
+  <div class="ngbjj-progress">
+    <div class="ngbjj-dot filled" id="ngbjj-dot-0"></div>
+    <div class="ngbjj-dot" id="ngbjj-dot-1"></div>
+    <div class="ngbjj-dot" id="ngbjj-dot-2"></div>
+  </div>
+
+  <!-- Step 1: Who is this for? -->
+  <div class="ngbjj-step active" id="ngbjj-step-0">
+    <div class="ngbjj-question">Who is this for?</div>
+    <div class="ngbjj-options">
+      <button class="ngbjj-btn" onclick="ngbjjSelect('who', 'me')">Me</button>
+      <button class="ngbjj-btn" onclick="ngbjjSelect('who', 'child')">My Child</button>
+    </div>
+  </div>
+
+  <!-- Step 2: What are you interested in? -->
+  <div class="ngbjj-step" id="ngbjj-step-1">
+    <div class="ngbjj-question">What are you interested in?</div>
+    <div class="ngbjj-options" id="ngbjj-interest-options">
+      <!-- Options injected by JS based on Step 1 answer -->
+    </div>
+    <button class="ngbjj-back" onclick="ngbjjBack(0)">&#8592; Go back</button>
+  </div>
+
+  <!-- Step 3: Kids age -->
+  <div class="ngbjj-step" id="ngbjj-step-2">
+    <div class="ngbjj-question">How old is your child?</div>
+    <div class="ngbjj-age-input-wrap">
+      <input type="number" class="ngbjj-age-input" id="ngbjj-age" min="3" max="17" placeholder="Age">
+      <span class="ngbjj-age-hint">Enter your child's current age</span>
+      <button class="ngbjj-btn ngbjj-btn-primary" onclick="ngbjjSubmitAge()" style="max-width:200px;">Continue</button>
+      <div class="ngbjj-error" id="ngbjj-age-error"></div>
+    </div>
+    <button class="ngbjj-back" onclick="ngbjjBack(1)">&#8592; Go back</button>
+  </div>
+
+  <!-- Step 4: Result — Adult classes -->
+  <div class="ngbjj-step" id="ngbjj-step-result-adult">
+    <div class="ngbjj-result-card">
+      <h3 id="ngbjj-adult-class-name"></h3>
+      <p id="ngbjj-adult-class-desc"></p>
+      <a id="ngbjj-adult-book-link" href="#" target="_blank">
+        <button class="ngbjj-btn ngbjj-btn-primary">Book Your Free Trial</button>
+      </a>
+    </div>
+    <button class="ngbjj-back" onclick="ngbjjRestart()">&#8592; Start over</button>
+  </div>
+
+  <!-- Step 5: Result — Kids classes -->
+  <div class="ngbjj-step" id="ngbjj-step-result-kids">
+    <div class="ngbjj-result-card">
+      <h3 id="ngbjj-kids-class-name"></h3>
+      <p id="ngbjj-kids-class-desc"></p>
+      <a id="ngbjj-kids-book-link" href="#" target="_blank">
+        <button class="ngbjj-btn ngbjj-btn-primary">Book Your Free Trial</button>
+      </a>
+    </div>
+    <button class="ngbjj-back" onclick="ngbjjRestart()">&#8592; Start over</button>
+  </div>
+
+  <!-- No class match -->
+  <div class="ngbjj-step" id="ngbjj-step-result-none">
+    <div class="ngbjj-result-card">
+      <h3>Let's Find the Right Fit</h3>
+      <p id="ngbjj-none-message"></p>
+      <a href="tel:+18185384989">
+        <button class="ngbjj-btn ngbjj-btn-primary">Call Us: (818) 538-4989</button>
+      </a>
+    </div>
+    <button class="ngbjj-back" onclick="ngbjjRestart()">&#8592; Start over</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  /* ============================================================
+     CONFIGURATION — UPDATE THESE URLs WITH YOUR MYSTUDIO LINKS
+     ============================================================ */
+  var BOOKING_URLS = {
+    fundamentals: 'https://YOUR_MYSTUDIO_LINK/fundamentals',
+    allLevels:    'https://YOUR_MYSTUDIO_LINK/all-levels',
+    kids_4_5:     'https://YOUR_MYSTUDIO_LINK/mini-grounders',
+    kids_5_7:     'https://YOUR_MYSTUDIO_LINK/little-grounders',
+    kids_8_13:    'https://YOUR_MYSTUDIO_LINK/super-grounders'
+  };
+
+  /* Kids age brackets — adjust ages and labels as needed */
+  var KIDS_CLASSES = [
+    { minAge: 4,  maxAge: 4,  name: 'Mini Grounders (Ages 4–5)',    desc: 'Our youngest grapplers! A fun, introductory class focused on coordination, listening skills, and basic jiu jitsu movements through games and play.', url: BOOKING_URLS.kids_4_5 },
+    { minAge: 5,  maxAge: 7,  name: 'Little Grounders (Ages 5–7)',  desc: 'Build confidence, discipline, and foundational jiu jitsu skills in an energetic, supportive environment designed for young kids.', url: BOOKING_URLS.kids_5_7 },
+    { minAge: 8,  maxAge: 13, name: 'Super Grounders (Ages 8–13)',  desc: 'Level up with real technique, live drilling, and structured training. Perfect for kids ready to develop serious jiu jitsu skills.', url: BOOKING_URLS.kids_8_13 }
+  ];
+
+  var ADULT_CLASSES = {
+    fundamentals: { name: 'Fundamentals', desc: 'Perfect for beginners. Learn the core techniques and principles of jiu jitsu in a welcoming, structured environment.', url: BOOKING_URLS.fundamentals },
+    allLevels:    { name: 'All Levels',   desc: 'Open to all experience levels. Train alongside a diverse group and sharpen your skills with varied techniques and live rolling.', url: BOOKING_URLS.allLevels }
+  };
+  /* ============================================================ */
+
+  var state = { who: null, interest: null, age: null };
+  var currentStep = 0;
+
+  function showStep(n) {
+    var steps = document.querySelectorAll('.ngbjj-step');
+    for (var i = 0; i < steps.length; i++) { steps[i].classList.remove('active'); }
+    document.getElementById(n).classList.add('active');
+  }
+
+  function updateDots(step) {
+    for (var i = 0; i < 3; i++) {
+      var dot = document.getElementById('ngbjj-dot-' + i);
+      if (i <= step) dot.classList.add('filled');
+      else dot.classList.remove('filled');
+    }
+  }
+
+  window.ngbjjSelect = function(field, value) {
+    state[field] = value;
+
+    if (field === 'who') {
+      /* Build interest options based on who */
+      var container = document.getElementById('ngbjj-interest-options');
+      container.innerHTML = '';
+
+      if (value === 'me') {
+        container.innerHTML =
+          '<button class="ngbjj-btn" onclick="ngbjjSelect(\'interest\', \'fundamentals\')">Fundamentals</button>' +
+          '<button class="ngbjj-btn" onclick="ngbjjSelect(\'interest\', \'allLevels\')">All Levels</button>' +
+          '<button class="ngbjj-btn" onclick="ngbjjSelect(\'interest\', \'kids\')">Kids Classes</button>';
+      } else {
+        container.innerHTML =
+          '<button class="ngbjj-btn" onclick="ngbjjSelect(\'interest\', \'kids\')">Kids Classes</button>' +
+          '<button class="ngbjj-btn" onclick="ngbjjSelect(\'interest\', \'fundamentals\')">Fundamentals</button>' +
+          '<button class="ngbjj-btn" onclick="ngbjjSelect(\'interest\', \'allLevels\')">All Levels</button>';
+      }
+
+      currentStep = 1;
+      updateDots(1);
+      showStep('ngbjj-step-1');
+    }
+
+    if (field === 'interest') {
+      if (value === 'fundamentals' || value === 'allLevels') {
+        var cls = ADULT_CLASSES[value];
+        document.getElementById('ngbjj-adult-class-name').textContent = cls.name;
+        document.getElementById('ngbjj-adult-class-desc').textContent = cls.desc;
+        document.getElementById('ngbjj-adult-book-link').href = cls.url;
+        currentStep = 2;
+        updateDots(2);
+        showStep('ngbjj-step-result-adult');
+      } else {
+        currentStep = 2;
+        updateDots(2);
+        showStep('ngbjj-step-2');
+        document.getElementById('ngbjj-age').value = '';
+        document.getElementById('ngbjj-age').focus();
+      }
+    }
+  };
+
+  window.ngbjjSubmitAge = function() {
+    var ageInput = document.getElementById('ngbjj-age');
+    var errorEl = document.getElementById('ngbjj-age-error');
+    var age = parseInt(ageInput.value, 10);
+
+    if (isNaN(age) || age < 1 || age > 99) {
+      errorEl.textContent = 'Please enter a valid age.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    state.age = age;
+
+    /* Find matching kids class */
+    var match = null;
+    for (var i = 0; i < KIDS_CLASSES.length; i++) {
+      if (age >= KIDS_CLASSES[i].minAge && age <= KIDS_CLASSES[i].maxAge) {
+        match = KIDS_CLASSES[i];
+        break;
+      }
+    }
+
+    if (match) {
+      document.getElementById('ngbjj-kids-class-name').textContent = match.name;
+      document.getElementById('ngbjj-kids-class-desc').textContent = match.desc;
+      document.getElementById('ngbjj-kids-book-link').href = match.url;
+      showStep('ngbjj-step-result-kids');
+    } else {
+      if (age < 4) {
+        document.getElementById('ngbjj-none-message').textContent =
+          'Our youngest class (Mini Grounders) starts at age 4. Give us a call and we can let you know when your little one can start!';
+      } else if (age >= 14) {
+        document.getElementById('ngbjj-none-message').textContent =
+          'At ' + age + ', our adult classes would be a great fit! Go back and check out Fundamentals or All Levels.';
+      } else {
+        document.getElementById('ngbjj-none-message').textContent =
+          'We\'d love to help find the right class. Give us a call and we\'ll get your child set up!';
+      }
+      showStep('ngbjj-step-result-none');
+    }
+  };
+
+  /* Allow Enter key on age input */
+  document.getElementById('ngbjj-age').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { window.ngbjjSubmitAge(); }
+  });
+
+  window.ngbjjBack = function(toStep) {
+    currentStep = toStep;
+    updateDots(toStep);
+    showStep('ngbjj-step-' + toStep);
+  };
+
+  window.ngbjjRestart = function() {
+    state = { who: null, interest: null, age: null };
+    currentStep = 0;
+    updateDots(0);
+    showStep('ngbjj-step-0');
+  };
+})();
+</script>
