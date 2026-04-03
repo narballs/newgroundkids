@@ -77,7 +77,15 @@ export const siteConfig = {
   mainNav: [
     { title: "Birthday Parties", href: "/birthday-parties" },
     { title: "Camps", href: "/camps" },
-    { title: "Events", href: "/events" },
+    {
+      title: "Events",
+      href: "/events",
+      children: [
+        { title: "Valentine's Day Party", href: "/events/valentines" },
+        { title: "Spring Party", href: "/events/spring" },
+        { title: "Summer Party", href: "/events/summer" },
+      ],
+    },
     { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" },
   ],
