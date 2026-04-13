@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Clock, MapPin, Info, Heart } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Info, Heart, Flower, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -398,6 +398,44 @@ export default function EventsPage() {
                   </CardContent>
                 </Card>
               </div>
+            </div>
+          </Container>
+        </Section>
+
+        {/* Mother's Day Upcoming Event Banner */}
+        <Section className="relative overflow-hidden" style={{ backgroundColor: "#FAF5FF" }}>
+          {/* Decorative flowers */}
+          <div className="pointer-events-none absolute inset-0 opacity-20">
+            <Flower className="absolute top-[15%] left-[8%] h-12 w-12 text-purple-400" />
+            <Flower className="absolute right-[10%] bottom-[15%] h-16 w-16 text-pink-400" />
+            <Flower className="absolute top-[40%] right-[25%] h-8 w-8 text-purple-300" />
+          </div>
+
+          <Container>
+            <div className="relative flex flex-col items-center justify-between gap-8 rounded-2xl border-2 border-purple-300 bg-white p-8 shadow-[8px_8px_0px_0px_#9333EA] md:flex-row">
+              <div className="flex-1 text-center md:text-left">
+                <Badge className="mb-3 border-2 border-purple-300 bg-purple-50 text-purple-600">
+                  <Flower className="mr-1 h-3 w-3" />
+                  COMING UP NEXT
+                </Badge>
+                <h2 className="font-heading mb-3 text-3xl text-purple-900">
+                  Mother&apos;s Day Mommy &amp; Me Jiu Jitsu
+                </h2>
+                <p className="max-w-xl text-purple-700/80">
+                  Sunday, May 10th — A free Mommy &amp; Me jiu jitsu class for ages 3+. Three time
+                  slots organized by age group.
+                </p>
+              </div>
+              <Button
+                size="lg"
+                className="font-heading border-2 border-purple-600 bg-purple-600 text-white hover:bg-purple-700"
+                asChild
+              >
+                <Link href="/events/mothers-day" className="inline-flex items-center gap-2">
+                  View Mother&apos;s Day Event
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
             </div>
           </Container>
         </Section>
