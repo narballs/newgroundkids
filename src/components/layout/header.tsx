@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useId } from "react";
-import { Menu, Phone } from "lucide-react";
+import { Menu, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
@@ -12,11 +12,14 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
 import { siteConfig } from "@/config/site";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [eventsOpen, setEventsOpen] = useState(false);
   const sheetId = useId();
 
   return (
@@ -38,19 +41,42 @@ export function Header() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden flex-1 justify-center lg:flex">
           <NavigationMenuList className="gap-1">
-            {/* All nav items from config (no dropdown needed for events) */}
-            {siteConfig.mainNav.map((item) => (
-              <NavigationMenuItem key={item.title}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={item.href}
-                    className="group bg-background font-heading hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm tracking-wide uppercase transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                  >
+            {siteConfig.mainNav.map((item) =>
+              "children" in item && item.children ? (
+                <NavigationMenuItem key={item.title}>
+                  <NavigationMenuTrigger className="font-heading bg-background hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground h-10 px-4 py-2 text-sm tracking-wide uppercase">
                     {item.title}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-1 p-2">
+                      {item.children.map((child) => (
+                        <li key={child.title}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href={child.href}
+                              className="font-heading hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground block rounded-md px-3 py-2 text-sm tracking-wide transition-colors"
+                            >
+                              {child.title}
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ) : (
+                <NavigationMenuItem key={item.title}>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href={item.href}
+                      className="group bg-background font-heading hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm tracking-wide uppercase transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    >
+                      {item.title}
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ),
+            )}
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -97,18 +123,48 @@ export function Header() {
             {/* Navigation Links */}
             <nav className="flex-1 overflow-y-auto px-4 py-6">
               <ul className="space-y-1">
-                {siteConfig.mainNav.map((item, index) => (
-                  <li key={item.title}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="font-heading hover:bg-accent/10 hover:text-accent active:bg-accent/20 flex items-center rounded-lg px-4 py-3.5 text-base tracking-wide uppercase transition-all"
-                      style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
+                {siteConfig.mainNav.map((item, index) =>
+                  "children" in item && item.children ? (
+                    <li key={item.title}>
+                      <button
+                        onClick={() => setEventsOpen(!eventsOpen)}
+                        className="font-heading hover:bg-accent/10 hover:text-accent active:bg-accent/20 flex w-full items-center justify-between rounded-lg px-4 py-3.5 text-base tracking-wide uppercase transition-all"
+                        style={{ animationDelay: `${index * 50}ms` }}
+                      >
+                        {item.title}
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform ${eventsOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      {eventsOpen && (
+                        <ul className="ml-4 space-y-1 border-l-2 pl-2">
+                          {item.children.map((child) => (
+                            <li key={child.title}>
+                              <Link
+                                href={child.href}
+                                onClick={() => setIsOpen(false)}
+                                className="font-heading hover:bg-accent/10 hover:text-accent active:bg-accent/20 flex items-center rounded-lg px-4 py-2.5 text-sm tracking-wide uppercase transition-all"
+                              >
+                                {child.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ) : (
+                    <li key={item.title}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="font-heading hover:bg-accent/10 hover:text-accent active:bg-accent/20 flex items-center rounded-lg px-4 py-3.5 text-base tracking-wide uppercase transition-all"
+                        style={{ animationDelay: `${index * 50}ms` }}
+                      >
+                        {item.title}
+                      </Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </nav>
 

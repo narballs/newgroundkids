@@ -1,287 +1,109 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, Clock, MapPin, Info, Heart, Flower, ArrowRight } from "lucide-react";
+import { Heart, Flower2, Sun, ArrowRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
-import { CalPopupButton } from "@/components/ui/cal-embed";
-import { images } from "@/lib/images";
-import { siteConfig } from "@/config/site";
-import { getNextEvent, activityIcons } from "@/data/events";
+import { upcomingEvents } from "@/data/events";
 
 export const metadata: Metadata = {
-  title: "Events - Valentine's Day Parents Night Out",
+  title: "Events",
   description:
-    "Valentine's Day Parents Night Out! Drop off your kids for games, bounce house, pizza, and a movie while you enjoy date night. $35 per child.",
+    "Upcoming events at NewGround Kids — Valentine's Day, Spring Fling, Summer Splash parents night out parties and more!",
 };
 
-// Floating heart component for decorations
-function FloatingHeart({
-  className,
-  size = "md",
-  filled = true,
-}: {
-  className?: string;
-  size?: "sm" | "md" | "lg" | "xl";
-  filled?: boolean;
-}) {
-  const sizes = {
-    sm: "h-4 w-4",
-    md: "h-6 w-6",
-    lg: "h-10 w-10",
-    xl: "h-16 w-16",
-  };
-
-  return <Heart className={`${sizes[size]} ${filled ? "fill-current" : ""} ${className}`} />;
-}
+const eventMeta: Record<string, { icon: typeof Heart; href: string; colors: { bg: string; border: string; text: string; badge: string } }> = {
+  "valentines-2026": {
+    icon: Heart,
+    href: "/events/valentines",
+    colors: { bg: "#FDF2F4", border: "#E11D48", text: "#881337", badge: "#FFE4E6" },
+  },
+  "spring-2026": {
+    icon: Flower2,
+    href: "/events/spring",
+    colors: { bg: "#F0FDF4", border: "#16A34A", text: "#14532D", badge: "#DCFCE7" },
+  },
+  "summer-2026": {
+    icon: Sun,
+    href: "/events/summer",
+    colors: { bg: "#FFF7ED", border: "#EA580C", text: "#7C2D12", badge: "#FFF7ED" },
+  },
+};
 
 export default function EventsPage() {
-  const event = getNextEvent();
-
-  if (!event) {
-    return null;
-  }
-
   return (
     <>
       <Header />
 
       <main className="flex-1">
-        {/* Hero Section - Valentine's Theme */}
-        <section
-          className="relative overflow-hidden py-16 md:py-24"
-          style={{ backgroundColor: "#FDF2F4" }}
-        >
-          {/* Sunburst Background Pattern */}
-          <div
-            className="absolute inset-0 opacity-30"
-            style={{
-              background: `
-                repeating-conic-gradient(
-                  from 0deg at 50% 0%,
-                  #E11D48 0deg 10deg,
-                  #FDA4AF 10deg 20deg
-                )
-              `,
-              maskImage: "radial-gradient(ellipse at top, black 0%, transparent 70%)",
-              WebkitMaskImage: "radial-gradient(ellipse at top, black 0%, transparent 70%)",
-            }}
-          />
-
-          {/* Floating Hearts Decoration */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <FloatingHeart
-              className="absolute top-[15%] left-[5%] animate-pulse text-rose-400 opacity-60"
-              size="lg"
-            />
-            <FloatingHeart
-              className="absolute top-[10%] right-[8%] text-rose-500 opacity-50"
-              size="xl"
-            />
-            <FloatingHeart
-              className="absolute bottom-[20%] left-[15%] text-rose-300 opacity-40"
-              size="md"
-            />
-            <FloatingHeart
-              className="absolute right-[12%] bottom-[25%] text-rose-600 opacity-50"
-              size="lg"
-            />
-            <FloatingHeart
-              className="absolute top-[5%] left-[40%] text-rose-400 opacity-30"
-              size="sm"
-            />
-            <FloatingHeart
-              className="absolute top-[20%] right-[30%] text-rose-500 opacity-40"
-              size="md"
-            />
-            <FloatingHeart
-              className="absolute top-[50%] left-[8%] text-rose-400 opacity-50"
-              size="md"
-              filled={false}
-            />
-            <FloatingHeart
-              className="absolute top-[45%] right-[5%] text-rose-500 opacity-60"
-              size="lg"
-            />
-          </div>
-
-          {/* Decorative Dots */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute top-[30%] left-[20%] h-3 w-3 rounded-full bg-white opacity-80" />
-            <div className="absolute top-[15%] right-[25%] h-4 w-4 rounded-full bg-white opacity-70" />
-            <div className="absolute bottom-[35%] left-[30%] h-2 w-2 rounded-full bg-white opacity-90" />
-            <div className="absolute right-[15%] bottom-[40%] h-3 w-3 rounded-full bg-white opacity-60" />
-          </div>
-
-          <Container className="relative z-10">
-            <div className="text-center">
-              <Badge className="animate-slide-down mb-6 border-2 border-rose-300 bg-white/80 text-rose-600 hover:bg-white">
-                <Heart className="mr-2 h-4 w-4 fill-rose-500 text-rose-500" />
-                {event.dayOfWeek}, {event.date}
-              </Badge>
-
-              <h1 className="animate-slide-up font-heading mb-4 text-5xl leading-tight text-rose-900 md:text-6xl lg:text-7xl">
-                {event.name}
-              </h1>
-
-              <p
-                className="animate-slide-up animation-delay-100 font-heading mb-6 text-2xl md:text-3xl"
-                style={{ color: event.theme?.primary }}
-              >
-                {event.subtitle}
-              </p>
-
-              <p className="animation-delay-200 animate-slide-up mx-auto max-w-2xl text-lg text-rose-700/80 md:text-xl">
-                {event.tagline}
-              </p>
-
-              {/* CTA Button */}
-              <div className="animate-slide-up animation-delay-400 mt-8">
-                <CalPopupButton
-                  eventType={event.calEventSlug}
-                  className="font-heading inline-flex h-16 items-center justify-center gap-3 rounded-full border-4 border-white bg-rose-600 px-12 text-xl text-white shadow-[0_8px_30px_rgba(225,29,72,0.4)] transition-all hover:scale-105 hover:bg-rose-700 hover:shadow-[0_12px_40px_rgba(225,29,72,0.5)]"
-                >
-                  <Heart className="h-6 w-6 fill-current" />
-                  Book Now - ${event.pricing.perChild}/child
-                </CalPopupButton>
-              </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="relative mx-auto mt-12 max-w-2xl">
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl border-4 border-white shadow-2xl">
-                <Image
-                  src={images.birthday.DSC00995}
-                  alt="Kids having fun at New Ground"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                {/* Heart overlay decorations */}
-                <div className="absolute inset-0 bg-gradient-to-t from-rose-900/20 to-transparent" />
-              </div>
-              {/* Decorative hearts around image */}
-              <FloatingHeart
-                className="absolute -top-4 -left-6 z-10 text-rose-500 drop-shadow-lg"
-                size="xl"
-              />
-              <FloatingHeart
-                className="absolute -right-4 -bottom-3 z-10 text-rose-400 drop-shadow-lg"
-                size="lg"
-              />
-            </div>
-          </Container>
-
-          {/* Bottom Cloud Effect */}
-          <div
-            className="absolute right-0 bottom-0 left-0 h-24"
-            style={{
-              background: "linear-gradient(to top, white 0%, transparent 100%)",
-            }}
-          />
-        </section>
-
-        {/* Featured Event Details */}
-        <Section className="relative overflow-hidden bg-white">
-          {/* Subtle heart pattern background */}
-          <div className="pointer-events-none absolute inset-0 opacity-[0.03]">
-            <div
-              className="h-full w-full"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 24 24' fill='%23E11D48'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E")`,
-                backgroundSize: "60px 60px",
-              }}
-            />
-          </div>
-
+        <Section className="bg-white py-16 md:py-24">
           <Container>
-            <div className="grid items-stretch gap-12 lg:grid-cols-2 lg:gap-16">
-              {/* Left: Event Details */}
-              <div className="relative z-10 flex flex-col">
-                <div className="mb-6 inline-flex items-center gap-2">
-                  <Badge
-                    className="border-2 text-sm font-bold"
-                    style={{
-                      borderColor: event.theme?.primary,
-                      color: event.theme?.primary,
-                      backgroundColor: event.theme?.secondary,
-                    }}
-                  >
-                    <Heart className="mr-1 h-3 w-3 fill-current" />
-                    NEXT EVENT
-                  </Badge>
-                </div>
+            <div className="mb-12 text-center">
+              <h1 className="font-heading mb-4 text-5xl md:text-6xl">Upcoming Events</h1>
+              <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+                Fun-filled parents night out events throughout the year. Drop off your kids for
+                games, bounce house, pizza, and a movie!
+              </p>
+            </div>
 
-                <h2 className="font-heading mb-2 text-3xl md:text-4xl">Event Details</h2>
+            <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
+              {upcomingEvents.map((event) => {
+                const meta = eventMeta[event.id];
+                if (!meta) return null;
+                const Icon = meta.icon;
 
-                <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
-                  {event.description}
-                </p>
-
-                {/* Event Logistics Card */}
-                <Card
-                  className="flex flex-1 flex-col border-2 shadow-[6px_6px_0px_0px]"
-                  style={{
-                    backgroundColor: event.theme?.secondary || "#FFE4E6",
-                    borderColor: event.theme?.primary,
-                    boxShadow: `6px 6px 0px 0px ${event.theme?.primary}`,
-                  }}
-                >
-                  <CardContent className="flex flex-1 flex-col p-6">
-                    <div className="space-y-5">
-                      <div className="flex items-start gap-4">
+                return (
+                  <Link key={event.id} href={meta.href} className="group">
+                    <Card
+                      className="flex h-full flex-col border-2 transition-all group-hover:-translate-y-1 group-hover:shadow-lg"
+                      style={{
+                        borderColor: meta.colors.border,
+                        backgroundColor: meta.colors.bg,
+                      }}
+                    >
+                      <CardContent className="flex flex-1 flex-col items-center p-6 text-center">
                         <div
-                          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
-                          style={{ backgroundColor: event.theme?.primary }}
+                          className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
+                          style={{ backgroundColor: meta.colors.badge }}
                         >
-                          <CalendarDays className="h-6 w-6 text-white" />
+                          <Icon
+                            className="h-8 w-8 fill-current"
+                            style={{ color: meta.colors.border }}
+                          />
                         </div>
-                        <div>
-                          <h4 className="font-heading text-lg font-bold">WHEN</h4>
-                          <p className="text-lg">
-                            {event.dayOfWeek}, {event.date}
-                          </p>
-                        </div>
-                      </div>
 
-                      <div className="flex items-start gap-4">
-                        <div
-                          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
-                          style={{ backgroundColor: event.theme?.primary }}
+                        <Badge
+                          className="mb-3 border text-xs"
+                          style={{
+                            borderColor: meta.colors.border,
+                            color: meta.colors.border,
+                            backgroundColor: meta.colors.badge,
+                          }}
                         >
-                          <Clock className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
-                          <h4 className="font-heading text-lg font-bold">TIME</h4>
-                          <div className="flex gap-6">
-                            <div>
-                              <span className="text-xs font-bold uppercase opacity-70">
-                                Drop Off
-                              </span>
-                              <p className="text-lg font-semibold">{event.dropOff}</p>
-                            </div>
-                            <div>
-                              <span className="text-xs font-bold uppercase opacity-70">
-                                Pick Up
-                              </span>
-                              <p className="text-lg font-semibold">{event.pickUp}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                          {event.dayOfWeek}, {event.date}
+                        </Badge>
 
-                      <div className="flex items-start gap-4">
-                        <div
-                          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
-                          style={{ backgroundColor: event.theme?.primary }}
+                        <h2
+                          className="font-heading mb-2 text-xl"
+                          style={{ color: meta.colors.text }}
                         >
-                          <MapPin className="h-6 w-6 text-white" />
+                          {event.name}
+                        </h2>
+
+                        <p className="text-muted-foreground mb-4 text-sm">{event.subtitle}</p>
+
+                        <div className="mt-auto">
+                          <span
+                            className="inline-flex items-center gap-1 text-sm font-semibold transition-all group-hover:gap-2"
+                            style={{ color: meta.colors.border }}
+                          >
+                            Learn More <ArrowRight className="h-4 w-4" />
+                          </span>
                         </div>
                         <div>
                           <h4 className="font-heading text-lg font-bold">WHERE</h4>
@@ -467,6 +289,11 @@ export default function EventsPage() {
               >
                 <Link href="/contact">Inquire About Private Events</Link>
               </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
             </div>
           </Container>
         </Section>

@@ -2,6 +2,20 @@
 // Recurring events like Parents Night Out, Pizza Night, etc.
 
 import { LucideIcon, Pizza, Gamepad2, Palette, Film, Heart, Shield, Users, Baby, Flower } from "lucide-react";
+import {
+  LucideIcon,
+  Pizza,
+  Gamepad2,
+  Palette,
+  Film,
+  Heart,
+  Sun,
+  Flower2,
+  Waves,
+  IceCream,
+  Music,
+  TreePine,
+} from "lucide-react";
 
 export interface EventActivity {
   icon: string; // Lucide icon name
@@ -90,6 +104,16 @@ export const upcomingEvents: RecurringEvent[] = [
     dayOfWeek: "Sunday",
     dropOff: "10:00 AM",
     pickUp: "2:30 PM",
+    id: "spring-2026",
+    name: "Spring Fling Parents Night Out",
+    emoji: "🌸",
+    subtitle: "4 Hours of Spring Fun",
+    description:
+      "Spring is in the air! Drop off your kids for an evening of spring-themed games, bounce house, pizza, and a movie while you enjoy a night out.",
+    date: "April 18th",
+    dayOfWeek: "Saturday",
+    dropOff: "4:00 PM",
+    pickUp: "8:00 PM",
     location: "New Ground Jiu Jitsu",
     addressLine1: "4617 Van Nuys Blvd, Unit B",
     addressLine2: "Sherman Oaks, CA 91403",
@@ -131,8 +155,68 @@ export const upcomingEvents: RecurringEvent[] = [
         calEventSlug: "mothers-day-ages-10-plus",
       },
     ],
+      perChild: 40,
+      description: "per child",
+    },
+    activities: [
+      { icon: "Gamepad2", label: "Spring Games" },
+      { icon: "Flower2", label: "Bounce House" },
+      { icon: "Pizza", label: "Pizza & Snacks" },
+      { icon: "Film", label: "Movie & Popcorn" },
+    ],
+    calEventSlug: "spring-night-out",
+    featured: true,
+    tagline: "You enjoy a night out. We'll bring the spring fun.",
+    theme: {
+      primary: "#16A34A", // Green-600
+      secondary: "#DCFCE7", // Green-100
+      burstColor: "#16A34A",
+    },
+  },
+  {
+    id: "summer-2026",
+    name: "Summer Splash Parents Night Out",
+    emoji: "☀️",
+    subtitle: "4 Hours of Summer Vibes",
+    description:
+      "Summer is here! Drop off your kids for an evening of summer-themed games, bounce house, pizza, and a movie while you soak up a free evening.",
+    date: "June 20th",
+    dayOfWeek: "Saturday",
+    dropOff: "4:00 PM",
+    pickUp: "8:00 PM",
+    location: "New Ground Jiu Jitsu",
+    addressLine1: "4617 Van Nuys Blvd, Unit B",
+    addressLine2: "Sherman Oaks, CA 91403",
+    pricing: {
+      perChild: 40,
+      description: "per child",
+    },
+    activities: [
+      { icon: "Gamepad2", label: "Summer Games" },
+      { icon: "Sun", label: "Bounce House" },
+      { icon: "Pizza", label: "Pizza & Snacks" },
+      { icon: "Film", label: "Movie & Popcorn" },
+    ],
+    calEventSlug: "summer-night-out",
+    featured: true,
+    tagline: "You enjoy a summer night. We'll keep the fun going.",
+    theme: {
+      primary: "#EA580C", // Orange-600
+      secondary: "#FFF7ED", // Orange-50
+      burstColor: "#EA580C",
+    },
   },
 ];
+
+// Helper to get event by slug
+export const getEventBySlug = (slug: string) => {
+  const slugMap: Record<string, string> = {
+    valentines: "valentines-2026",
+    spring: "spring-2026",
+    summer: "summer-2026",
+  };
+  return upcomingEvents.find((e) => e.id === slugMap[slug]);
+};
 
 // Helper to get the next upcoming event
 export const getNextEvent = () => upcomingEvents.find((e) => e.featured) || upcomingEvents[0];
@@ -151,4 +235,10 @@ export const activityIcons: Record<string, LucideIcon> = {
   Users,
   Baby,
   Flower,
+  Sun,
+  Flower2,
+  Waves,
+  IceCream,
+  Music,
+  TreePine,
 };
