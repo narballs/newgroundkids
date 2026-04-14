@@ -82,6 +82,7 @@ export const siteConfig = {
       href: "/events",
       children: [
         { title: "Valentine's Day Party", href: "/events/valentines" },
+        { title: "Mother's Day", href: "/events/mothers-day" },
         { title: "Spring Party", href: "/events/spring" },
         { title: "Summer Party", href: "/events/summer" },
       ],
